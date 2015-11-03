@@ -1,14 +1,22 @@
 package com.ecolemultimedia.projetfinal.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.views.ViewMenu;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,12 +24,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     RelativeLayout ui_rl_menu=null;
 
-    private LocationManager locationManager;
     private GoogleMap gMap;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -34,87 +43,91 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         ui_rl_menu.addView(viewMenu);
 
 
+        setUpMapIfNeeded();
         SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        buildGoogleApiClient();
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void onResume() {
+    public void onMapReady(GoogleMap map) {
+        // Add a marker in Sydney, Australia, and move the camera.
+        //LatLng sydney = new LatLng(-34, 151);
+        //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            gMap.setMyLocationEnabled(true);
+        } else {
+            Toast noPermission = Toast.makeText(this, "location permission not granted", Toast.LENGTH_LONG);
+            noPermission.show();
+        }
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    protected void onResume() {
         super.onResume();
+        setUpMapIfNeeded();
+    }
 
-        //Obtention de la référence du service
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-
-        //Si le GPS est disponible, on s'y abonne
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            abonnementGPS();
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (gMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            gMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            //check permission for location
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                gMap.setMyLocationEnabled(true);
+            } else {
+                Log.d("", "permission location not granted");
+            }
+            gMap.setMapType(gMap.MAP_TYPE_NORMAL);
+            gMap.setTrafficEnabled(false);
+            // Check if we were successful in obtaining the map
+            if (gMap != null) {
+                setUpMap();
+            }
         }
     }
 
+    private void setUpMap() {
+        //TODO
+    }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        desabonnementGPS();
-    }
-
-
-    public void abonnementGPS() {
-        //On s'abonne
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-    }
-
-
-    public void desabonnementGPS() {
-        //Si le GPS est disponible, on s'y abonne
-        locationManager.removeUpdates(this);
-    }
-
-
-    @Override
-    public void onLocationChanged(final Location location) {
-
-        final LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        if (latLng != null) {
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-            gMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .title("Hello Saber"));
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            String toastString = String.valueOf(mLastLocation.getLatitude()) + String.valueOf(mLastLocation.getLongitude());
+            Toast toast = Toast.makeText(this, toastString, Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
-
     @Override
-    public void onProviderDisabled(final String provider) {
-        //Si le GPS est désactivé on se désabonne
-        if ("gps".equals(provider)) {
-            desabonnementGPS();
-        }
-    }
-
-
-    @Override
-    public void onProviderEnabled(final String provider) {
-        //Si le GPS est activé on s'abonne
-        if ("gps".equals(provider)) {
-            abonnementGPS();
-        }
-    }
-
-
-    @Override
-    public void onStatusChanged(final String provider, final int status, final Bundle extras) {
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        String toastString = "Connexion failed";
+        Toast toast = Toast.makeText(this, toastString, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        gMap = googleMap;
-        gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        gMap.setTrafficEnabled(true);
+    public void onConnectionSuspended(int i) {
+        String toastString = "Connexion suspended";
+        Toast toast = Toast.makeText(this, toastString, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
