@@ -62,11 +62,11 @@ public class ViewMenu extends RelativeLayout {
 
 
         if (positionScreen == 0) {
-           // ui_img_menu_showcase.setImageResource(R.drawable.showcase_yellow);
+            ui_img_menu_map.setImageResource(R.drawable.scond_map);
         } else if (positionScreen == 1) {
-           // ui_img_menu_demo.setImageResource(R.drawable.demo_yellow);
+            ui_img_menu_chat.setImageResource(R.drawable.second_chat);
         }else if(positionScreen == 2){
-          //  ui_img_menu_spech.setImageResource(R.drawable.spech_yellow);
+            ui_img_menu_profil.setImageResource(R.drawable.second_profil);
         }
 
 

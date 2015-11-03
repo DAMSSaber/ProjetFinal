@@ -24,7 +24,7 @@
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_switch_cam" />
+                android:src="@drawable/first_map" />
 
         </RelativeLayout>
 
@@ -42,7 +42,7 @@
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_switch_cam" />
+                android:src="@drawable/fisrt_chat" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -59,7 +59,7 @@
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_switch_cam" />
+                android:src="@drawable/first_profil" />
 
         </RelativeLayout>
 
