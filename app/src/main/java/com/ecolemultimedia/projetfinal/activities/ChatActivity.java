@@ -1,47 +1,24 @@
 package com.ecolemultimedia.projetfinal.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ecolemultimedia.projetfinal.R;
-import com.ecolemultimedia.projetfinal.utils.Const;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URISyntaxException;
-
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 
 public class ChatActivity extends Activity {
 
 
-    private Socket mSocket;
-
-    {
-        try {
-            mSocket = IO.socket(Const.CHAT_SERVER_URL);
-        } catch (URISyntaxException e) {
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        mSocket.connect();
-
-        mSocket.on("login", onLogin);
 
 
-        mSocket.emit("add user", "saber");
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,25 +45,7 @@ public class ChatActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSocket.on("login", onLogin);
     }
 
-    private Emitter.Listener onLogin = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            JSONObject data = (JSONObject) args[0];
 
-            int numUsers;
-            try {
-                numUsers = data.getInt("numUsers");
-            } catch (JSONException e) {
-                return;
-            }
-            Intent intent = new Intent();
-            intent.putExtra("username", "Saber");
-            intent.putExtra("numUsers", numUsers);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-    };
 }

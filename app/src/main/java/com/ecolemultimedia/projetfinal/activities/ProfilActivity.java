@@ -5,21 +5,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.components.AppController;
+import com.ecolemultimedia.projetfinal.views.ViewMenu;
 import com.parse.ParseUser;
 
 public class ProfilActivity extends AppCompatActivity {
 
     private ImageView mUserProfilSelfie;
+    RelativeLayout ui_rl_menu=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
+
+
+        ui_rl_menu=(RelativeLayout)findViewById(R.id.ui_rl_menu);
+        ViewMenu viewMenu= new ViewMenu(this,ProfilActivity.this);
+        viewMenu.init(2);
+        ui_rl_menu.addView(viewMenu);
 
         mUserProfilSelfie = (ImageView)findViewById(R.id.user_profil_selfie);
 

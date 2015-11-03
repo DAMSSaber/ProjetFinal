@@ -1,25 +1,24 @@
 package com.ecolemultimedia.projetfinal.activities;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.widget.RelativeLayout;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.ecolemultimedia.projetfinal.views.ViewMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.ParseObject;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+
+    RelativeLayout ui_rl_menu=null;
 
     private LocationManager locationManager;
     private GoogleMap gMap;
@@ -28,6 +27,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        ui_rl_menu=(RelativeLayout)findViewById(R.id.ui_rl_menu);
+        ViewMenu viewMenu= new ViewMenu(this,MapActivity.this);
+        viewMenu.init(0);
+        ui_rl_menu.addView(viewMenu);
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager()
@@ -62,25 +66,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void abonnementGPS() {
         //On s'abonne
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-        } else {
-            Log.d("", "permission location not granted");
-        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
     }
 
 
     public void desabonnementGPS() {
         //Si le GPS est disponible, on s'y abonne
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationManager.removeUpdates(this);
-        } else {
-            Log.d("", "permission location not granted");
-        }
+        locationManager.removeUpdates(this);
     }
 
 
@@ -122,8 +114,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        gMap.setTrafficEnabled(false);
-        gMap.setMyLocationEnabled(true);
+        gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        gMap.setTrafficEnabled(true);
     }
 }

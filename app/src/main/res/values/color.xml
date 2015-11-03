@@ -6,6 +6,6 @@
     <color name="color_white_low_opacity">#abcccccc</color>
     <color name="color_grey_dark">#333333</color>
     <color name="color_white">#ffffff</color>
-
+    <color name="color_bg_menu">#1c1c1c</color>
 
 </resources>

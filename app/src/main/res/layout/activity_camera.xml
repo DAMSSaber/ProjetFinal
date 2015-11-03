@@ -1,10 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyneo_activity_paysage"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <SurfaceView
-        android:id="@+id/surfaceView"
+        android:id="@+id/keyneo_surface_camera"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:visibility="visible">
+    </SurfaceView>
+
+
+
+    <Button
+        android:id="@+id/btn_take1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Take" />
+
 </RelativeLayout>

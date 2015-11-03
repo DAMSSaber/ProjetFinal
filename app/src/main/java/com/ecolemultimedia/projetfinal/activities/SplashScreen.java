@@ -19,8 +19,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
 
         // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "nF9TvVOMOcRnOekpGnHc5Eb490XF5VvqnT3FbIEd", "ENLn1YKpPcX6la7NBDtAyv8lRy49K5fBVPEAfr0v");
+
 
         setContentView(R.layout.activity_splach);
 

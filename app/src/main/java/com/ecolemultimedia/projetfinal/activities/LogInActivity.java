@@ -62,7 +62,7 @@ public class LogInActivity extends AppCompatActivity {
                 // TODO: utiliser string
                 Toast notFilledProfil = Toast.makeText(mContext, "Votre profil n'est pas complet", Toast.LENGTH_LONG);
                 success.show();
-                Intent intent = new Intent(this, ProfilActivity.class);
+                Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
             } else {
                 //else show map
