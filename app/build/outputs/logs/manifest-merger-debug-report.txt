@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:2:1-62:12
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:2:1-70:12
 	xmlns:android
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:2:11-69
 	package
@@ -94,7 +94,7 @@ ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/sr
 	android:name
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:24:19-67
 application
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:27:5-59:19
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:27:5-67:19
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.1.0/AndroidManifest.xml:19:5-20
@@ -203,6 +203,7 @@ MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber D
 MERGED from [com.google.android.gms:play-services-wearable:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.1.0/AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:31:9-41
 	android:allowBackup
@@ -261,39 +262,55 @@ MERGED from [com.google.android.gms:play-services-basement:8.1.0] /Users/saber/D
 	android:value
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:40:13-66
 activity#com.ecolemultimedia.projetfinal.activities.SplashScreen
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:42:9-49:20
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:42:9-50:20
+	android:screenOrientation
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:45:13-49
 	android:label
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:44:13-45
 	android:name
 		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:43:13-52
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:45:13-48:29
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:46:13-49:29
 action#android.intent.action.MAIN
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:46:17-69
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:47:17-69
 	android:name
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:46:25-66
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:47:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:47:17-77
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:48:17-77
 	android:name
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:47:27-74
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:48:27-74
 activity#com.ecolemultimedia.projetfinal.activities.MapActivity
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:50:9-52:57
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:51:9-54:61
+	android:screenOrientation
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:54:13-49
 	android:label
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:52:13-45
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:53:13-45
 	android:name
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:51:13-51
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:52:13-51
 activity#com.ecolemultimedia.projetfinal.activities.ChatActivity
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:53:9-55:57
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:55:9-58:61
+	android:screenOrientation
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:58:13-49
 	android:label
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:55:13-45
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:57:13-45
 	android:name
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:54:13-52
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:56:13-52
 activity#com.ecolemultimedia.projetfinal.activities.CameraActivity
-ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:56:9-58:57
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:59:9-62:61
+	android:screenOrientation
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:62:13-49
 	android:label
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:58:13-45
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:61:13-45
 	android:name
-		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:57:13-54
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:60:13-54
+activity#com.ecolemultimedia.projetfinal.activities.SelfieActivity
+ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:63:9-66:61
+	android:screenOrientation
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:66:13-49
+	android:label
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:65:13-45
+	android:name
+		ADDED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:64:13-54
 uses-sdk
 INJECTED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:20:5-43
@@ -430,6 +447,8 @@ MERGED from [com.google.android.gms:play-services-wearable:8.1.0] /Users/saber/D
 MERGED from [com.google.android.gms:play-services-base:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/AndroidManifest.xml:18:5-42
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/AndroidManifest.xml:18:5-42
 MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		INJECTED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml
@@ -455,7 +474,7 @@ MERGED from [com.google.android.gms:play-services-ads:8.1.0] /Users/saber/Deskto
 	android:name
 		ADDED from [com.google.android.gms:play-services-ads:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/AndroidManifest.xml:30:19-91
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-IMPLIED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:2:1-62:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
+IMPLIED from /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/src/main/AndroidManifest.xml:2:1-70:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
 uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from [com.google.android.gms:play-services-gcm:8.1.0] /Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.1.0/AndroidManifest.xml:21:5-82
 	android:name

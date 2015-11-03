@@ -1,16 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_rose_light">
+    android:background="@android:color/white">
 
-    <TextView
+    <ImageView
         android:id="@+id/splach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="TouchMe"
-        android:textColor="@android:color/white"
+        android:layout_margin="100dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/logo"
         android:textSize="50dp"
-        android:textStyle="bold" />
+       />
 </RelativeLayout>
 <!-- From: file:/Users/saber/Desktop/Saber%20DAMS/Perso/Projet%20final/ProjetFinal/app/src/main/res/layout/activity_splach.xml -->
