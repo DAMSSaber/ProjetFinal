@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.parse.Parse;
 
 
 public class SplashScreen extends Activity {
@@ -17,6 +18,9 @@ public class SplashScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "nF9TvVOMOcRnOekpGnHc5Eb490XF5VvqnT3FbIEd", "ENLn1YKpPcX6la7NBDtAyv8lRy49K5fBVPEAfr0v");
 
         setContentView(R.layout.activity_splach);
 
@@ -40,7 +44,7 @@ public class SplashScreen extends Activity {
                 } finally {
 
                     Intent intent = new Intent(SplashScreen.this,
-                            MapActivity.class);
+                            LogInActivity.class);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
 

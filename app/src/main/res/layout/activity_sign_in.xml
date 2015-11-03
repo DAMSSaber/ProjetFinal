@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@color/color_white_low_opacity"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:padding="30dp">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email_input"
+            android:hint="@string/email_hint_string"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color_grey_dark"
+            android:background="@color/color_white"
+            android:textColorHint="@color/color_grey_dark"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/username_input"
+            android:layout_below="@+id/email_input"
+            android:hint="@string/username_hint_string"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color_grey_dark"
+            android:background="@color/color_white"
+            android:textColorHint="@color/color_grey_dark"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/password_input"
+            android:layout_below="@+id/username_input"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/password_hint_string"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:background="@color/color_white"
+            android:textColor="@color/color_grey_dark"
+            android:textColorHint="@color/color_grey_dark"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in_button_string"
+            android:id="@+id/log_in_button"
+            android:layout_below="@+id/password_input"
+            android:onClick="signIn"
+            android:background="@color/color_yellow"
+            android:padding="10dp"
+            android:textColor="@color/color_grey_dark"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/or_label"
+            android:layout_below="@+id/log_in_button"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:id="@+id/or_label"
+            android:visibility="gone" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/facebook_login_button_string"
+            android:id="@+id/facebook_connect_button"
+            android:textColor="#ffffff"
+            android:background="#3a5795"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:onClick="clickOnFacebookConnectButton"
+            android:layout_below="@+id/or_label" />
+    </RelativeLayout>
+</RelativeLayout>
