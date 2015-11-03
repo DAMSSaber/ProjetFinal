@@ -60,7 +60,7 @@ public class ViewMenu extends RelativeLayout {
 
 
 
-
+        //TODO: if position on 0, desactivate call on 0 item (or it reload activity)
         if (positionScreen == 0) {
             ui_img_menu_map.setImageResource(R.drawable.scond_map);
         } else if (positionScreen == 1) {
