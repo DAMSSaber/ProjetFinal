@@ -14,7 +14,6 @@ import com.ecolemultimedia.projetfinal.activities.ChatActivity;
 import com.ecolemultimedia.projetfinal.activities.MapActivity;
 import com.ecolemultimedia.projetfinal.activities.ProfilActivity;
 
-
 /**
  * Created by saberdams on 10/07/15.
  */
