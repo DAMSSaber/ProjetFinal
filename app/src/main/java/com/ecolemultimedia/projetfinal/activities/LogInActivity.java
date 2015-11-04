@@ -32,7 +32,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         mContext = getApplicationContext();
-        mUsernameET = (EditText)findViewById(R.id.username_input);
+        mUsernameET = (EditText)findViewById(R.id.age_input);
         mPasswordET = (EditText)findViewById(R.id.password_input);
         mLogInButton = (Button)findViewById(R.id.log_in_button);
         mSignInButton = (Button)findViewById(R.id.sign_in_button);
@@ -62,7 +62,7 @@ public class LogInActivity extends AppCompatActivity {
                 // TODO: utiliser string
                 Toast notFilledProfil = Toast.makeText(mContext, "Votre profil n'est pas complet", Toast.LENGTH_LONG);
                 success.show();
-                Intent intent = new Intent(this, MapActivity.class);
+                Intent intent = new Intent(this, InitialUserInformationsActivity.class);
                 startActivity(intent);
             } else {
                 //else show map

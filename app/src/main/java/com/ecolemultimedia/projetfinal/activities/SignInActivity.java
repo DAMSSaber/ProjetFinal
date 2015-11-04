@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,7 +28,7 @@ public class SignInActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mEmailET = (EditText)findViewById(R.id.email_input);
-        mUsernameET = (EditText)findViewById(R.id.username_input);
+        mUsernameET = (EditText)findViewById(R.id.age_input);
         mPasswordET = (EditText)findViewById(R.id.password_input);
         mPasswordET.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -56,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
                 // TODO: utiliser string
                 Toast notFilledProfil = Toast.makeText(mContext, "Votre profil n'est pas complet", Toast.LENGTH_LONG);
                 success.show();
-                Intent intent = new Intent(this, ProfilActivity.class);
+                Intent intent = new Intent(this, InitialUserInformationsActivity.class);
                 startActivity(intent);
             } else {
                 //else show map

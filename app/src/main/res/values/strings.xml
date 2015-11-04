@@ -25,4 +25,9 @@
     <string name="title_activity_edit_profil">EditProfilActivity</string>
     <string name="or_label">OU</string>
     <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_initial_user_informations">InitialUserInformationsActivity</string>
+    <string name="save_button_string">ENREGISTRER</string>
+    <string name="shown_username_hint_string">Pseudonyme</string>
+    <string name="age_label">DATE DE NAISSANCE</string>
+    <string name="shown_username_label">PSEUDONYME</string>
 </resources>
