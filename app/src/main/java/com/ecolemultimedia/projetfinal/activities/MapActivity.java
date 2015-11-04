@@ -5,10 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -19,17 +16,20 @@ import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.views.ViewMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
-import java.util.Map;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     RelativeLayout ui_rl_menu=null;
 
@@ -48,19 +48,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         ui_rl_menu.addView(viewMenu);
 
 
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
         setUpMapIfNeeded();
         SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
-        buildGoogleApiClient();
 
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
-        // Add a marker in Sydney, Australia, and move the camera.
-        //LatLng sydney = new LatLng(-34, 151);
-        //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         checkForLocationPermission();
     }
 
@@ -70,6 +67,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .addOnConnectionFailedListener(MapActivity.this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -127,13 +129,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+    public void updateUserLastLocationWithLocation(Location location) {
+        ParseGeoPoint userLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+        ParseUser.getCurrentUser().put("lastLocation", userLocation);
+        ParseUser.getCurrentUser().saveInBackground();
+    }
+
+    public void updateCameraWithLocation(Location location) {
+        LatLng locationLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        CameraUpdate centerCamera = CameraUpdateFactory.newLatLng(locationLatLng);
+        CameraUpdate zoomCamera = CameraUpdateFactory.zoomTo(15);
+        gMap.moveCamera(centerCamera);
+        gMap.animateCamera(zoomCamera);
+    }
+
     @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            String toastString = "•••" + String.valueOf(mLastLocation.getLatitude()) + String.valueOf(mLastLocation.getLongitude());
+            String toastString = "Connexion successful";
             Toast toast = Toast.makeText(MapActivity.this, toastString, Toast.LENGTH_SHORT);
             toast.show();
+
+            updateCameraWithLocation(mLastLocation);
+            updateUserLastLocationWithLocation(mLastLocation);
         }
     }
 
@@ -149,5 +168,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         String toastString = "Connexion suspended";
         Toast toast = Toast.makeText(MapActivity.this, toastString, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        updateUserLastLocationWithLocation(location);
     }
 }
