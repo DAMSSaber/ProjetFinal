@@ -100,9 +100,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
                     android:calendarViewShown="false"
-                    android:measureAllChildren="true"
+                    android:measureAllChildren="false"
                     android:layout_below="@+id/age_label"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:spinnersShown="true" />
 
                 <Button
                     android:layout_width="match_parent"

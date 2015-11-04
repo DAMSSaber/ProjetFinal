@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.ecolemultimedia.projetfinal.utils.LruBitmapCache;
+import com.firebase.client.Firebase;
 import com.parse.Parse;
 
 public class AppController extends Application {
@@ -30,6 +31,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        Firebase.setAndroidContext(this);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "nF9TvVOMOcRnOekpGnHc5Eb490XF5VvqnT3FbIEd", "ENLn1YKpPcX6la7NBDtAyv8lRy49K5fBVPEAfr0v");
     }
