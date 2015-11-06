@@ -2,16 +2,21 @@ package com.ecolemultimedia.projetfinal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.ecolemultimedia.projetfinal.models.User;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -49,18 +54,22 @@ public class SignInActivity extends AppCompatActivity {
                 if(mPasswordET.getText() != null) {
                     mFirebaseRef.createUser(String.valueOf(mEmailET.getText()), String.valueOf(mPasswordET.getText()), new Firebase.ValueResultHandler<Map<String, Object>>() {
                         @Override
-                        public void onSuccess(Map<String, Object> result) {
-                            System.out.println("Successfully created user account with uid: " + result.get("uid"));
-                            //TODO: use this instead for prod :
-                            //Intent intent = new Intent(this, InitialUserInformationsActivity.class);
-                            //startActivity(intent);
-                            //dev :
-                            Intent intent = new Intent(SignInActivity.this, MapActivity.class);
+                        public void onSuccess(final Map<String, Object> result) {
+                            User currentUser = new User(String.valueOf(result.get("uid")), String.valueOf(mEmailET.getText()), true);
+
+                            Firebase user = mFirebaseRef.child("users/" + String.valueOf(result.get("uid")));
+                            user.setValue(currentUser);
+                            //TODO: utilser string
+                            Toast success = Toast.makeText(SignInActivity.this, "compte créé, vous pouvez vous connecter", Toast.LENGTH_LONG);
+                            success.show();
+                            Intent intent = new Intent(SignInActivity.this, LogInActivity.class);
                             startActivity(intent);
                         }
                         @Override
                         public void onError(FirebaseError firebaseError) {
                             // there was an error
+                            Toast error = Toast.makeText(SignInActivity.this, "" + firebaseError.getMessage(), Toast.LENGTH_LONG);
+                            error.show();
                         }
                     });
                 } else {

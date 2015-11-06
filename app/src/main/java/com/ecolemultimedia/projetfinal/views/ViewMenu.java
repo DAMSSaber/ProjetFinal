@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.activities.ChatActivity;
+import com.ecolemultimedia.projetfinal.activities.InitialUserInformationsActivity;
 import com.ecolemultimedia.projetfinal.activities.MapActivity;
 import com.ecolemultimedia.projetfinal.activities.ProfilActivity;
 

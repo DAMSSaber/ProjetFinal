@@ -2,6 +2,7 @@ package com.ecolemultimedia.projetfinal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -66,6 +67,8 @@ public class LogInActivity extends AppCompatActivity {
                     public void onAuthenticated(AuthData authData) {
                         // authentication successful
 
+                        setCurrentUserSharedPreferences(authData.getUid());
+
                         //TODO: check if user informations are filled
                         //if not :
                         //Intent intent = new Intent(this, InitialUserInformationsActivity.class);
@@ -92,6 +95,16 @@ public class LogInActivity extends AppCompatActivity {
             Toast noUsername = Toast.makeText(mContext, "Vous devez renseigner votre nom d'utilisateur", Toast.LENGTH_LONG);
             noUsername.show();
         }
+    }
+
+    public void setCurrentUserSharedPreferences(String uid) {
+        SharedPreferences pref = getSharedPreferences("currentUser", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        //TODO: set infos with DB
+        //editor.putString("uid", "");
+        //editor.putString("email", String.valueOf(mEmailET.getText()));
+        //editor.putBoolean("isVisible", true);
+        editor.commit();
     }
 
     public void goToSignInActivity(View view) {

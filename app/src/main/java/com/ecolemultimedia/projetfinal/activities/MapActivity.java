@@ -130,9 +130,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void updateUserLastLocationWithLocation(Location location) {
-        ParseGeoPoint userLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-        ParseUser.getCurrentUser().put("lastLocation", userLocation);
-        ParseUser.getCurrentUser().saveInBackground();
+        //ParseGeoPoint userLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+        //ParseUser.getCurrentUser().put("lastLocation", userLocation);
+        //ParseUser.getCurrentUser().saveInBackground();
     }
 
     public void updateCameraWithLocation(Location location) {
