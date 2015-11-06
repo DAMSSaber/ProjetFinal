@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +14,6 @@ import com.ecolemultimedia.projetfinal.R;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-
-import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -87,7 +81,7 @@ public class LogInActivity extends AppCompatActivity {
                         noPassword.show();
                     }
                 };
-                mFirebaseRef.authWithPassword(String.valueOf(mEmailET.getText()), String.valueOf(mPasswordET.getText()), authResultHandler);
+                    mFirebaseRef.authWithPassword(String.valueOf(mEmailET.getText()), String.valueOf(mPasswordET.getText()), authResultHandler);
             } else {
                 //TODO: utiliser string
                 Toast noPassword = Toast.makeText(mContext, "Vous devez renseigner votre mot de passe", Toast.LENGTH_LONG);
@@ -95,7 +89,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         } else {
             //TODO: utiliser string
-            Toast noUsername = Toast.makeText(mContext, "Vous devez renseigner votre email", Toast.LENGTH_LONG);
+            Toast noUsername = Toast.makeText(mContext, "Vous devez renseigner votre nom d'utilisateur", Toast.LENGTH_LONG);
             noUsername.show();
         }
     }
@@ -103,5 +97,20 @@ public class LogInActivity extends AppCompatActivity {
     public void goToSignInActivity(View view) {
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
+    }
+
+    public void clickOnFacebookConnectButton(View view) {
+//        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+//            @Override
+//            public void done(ParseUser user, ParseException err) {
+//                if (user == null) {
+//                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+//                } else if (user.isNew()) {
+//                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+//                } else {
+//                    Log.d("MyApp", "User logged in through Facebook!");
+//                }
+//            }
+//        });
     }
 }

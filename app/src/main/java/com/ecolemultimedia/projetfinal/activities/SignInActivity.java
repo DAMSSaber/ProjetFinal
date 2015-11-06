@@ -20,8 +20,7 @@ import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private EditText mEmailET;
-    private EditText mPasswordET;
+    private EditText mEmailET;    private EditText mPasswordET;
     private Context mContext;
     private Firebase mFirebaseRef;
 

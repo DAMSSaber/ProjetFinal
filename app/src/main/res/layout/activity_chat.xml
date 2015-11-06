@@ -1,40 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_grey_light">
+    android:background="@android:color/white">
 
 
+    <ListView
+        android:id="@+id/ui_lis_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ui_sperateur"
+        android:background="@android:color/white"></ListView>
 
 
+    <TextView
+        android:id="@id/ui_sperateur"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ui_rl_write_message"
+        android:background="@android:color/black" />
 
 
     <LinearLayout
-        android:id="@+id/ui_rl_write_message"
+        android:id="@id/ui_rl_write_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ui_rl_menu"
-        android:weightSum="1"
         android:background="@android:color/white"
-        >
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/ui_edit_text"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@android:color/white"
-            android:textColor="@color/color_grey_dark"
-            android:paddingLeft="10dp"
-            android:padding="0dp"
             android:layout_weight="0.2"
-            android:hint="Message :)"/>
+            android:background="@android:color/white"
+            android:hint="Message :)"
+            android:padding="0dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/color_grey_dark" />
 
         <Button
             android:id="@+id/ui_btn_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_weight="0.8"
-            android:layout_centerVertical="true"
             android:background="@color/color_yellow"
             android:text="SEND"
             android:textStyle="bold" />
