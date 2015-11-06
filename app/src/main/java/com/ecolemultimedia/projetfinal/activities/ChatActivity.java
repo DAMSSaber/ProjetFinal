@@ -37,7 +37,7 @@ public class ChatActivity extends Activity {
 
 
     private Firebase mFirebaseRef;
-    private static final String FIREBASE_URL = "https://projetfinal.firebaseio-demo.com";
+    private static final String FIREBASE_URL = "https://projetfinal.firebaseio-demo.com/chat/saber-damien";
     private ValueEventListener mConnectedListener;
     private ChatListAdapter mChatListAdapter;
 
@@ -61,9 +61,8 @@ public class ChatActivity extends Activity {
 
 
         // Setup our Firebase mFirebaseRef
-        mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
+        mFirebaseRef = new Firebase(FIREBASE_URL);
 
-       // Log.v("Debeug", "userrrrrr: " + mFirebaseRef.getAuth().getProvider());
 
         ui_edit_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -97,20 +96,32 @@ public class ChatActivity extends Activity {
         });
 
         // Finally, a little indication of connection status
-        mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
+      /*  mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean connected = (Boolean) dataSnapshot.getValue();
                 if (connected) {
-                    Toast.makeText(ChatActivity.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, "Connected to TouchMe", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ChatActivity.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, "Disconnected from TouchMe", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 // No-op
+            }
+        });*/
+
+        mFirebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
 

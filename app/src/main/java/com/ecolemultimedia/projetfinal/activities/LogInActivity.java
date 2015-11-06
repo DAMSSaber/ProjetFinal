@@ -70,7 +70,7 @@ public class LogInActivity extends AppCompatActivity {
                     public void onAuthenticated(AuthData authData) {
                         // authentication successful
 
-                        setCurrentUserSharedPreferences(authData.getUid());
+                      //  setCurrentUserSharedPreferences(authData.getUid());
 
                         //TODO: check if user informations are filled
                         mFirebaseRef.child("users/" + authData.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

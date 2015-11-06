@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.activities.ChatActivity;
 import com.ecolemultimedia.projetfinal.activities.InitialUserInformationsActivity;
+import com.ecolemultimedia.projetfinal.activities.ListUserChatActivity;
 import com.ecolemultimedia.projetfinal.activities.MapActivity;
 import com.ecolemultimedia.projetfinal.activities.ProfilActivity;
 
@@ -83,7 +84,7 @@ public class ViewMenu extends RelativeLayout {
         ui_rl_menu_chat.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(m_context, InitialUserInformationsActivity.class);
+                Intent intent= new Intent(m_context, ListUserChatActivity.class);
                 m_context.startActivity(intent);
                 activity.overridePendingTransition(0, 0);
                // activity.finish();
