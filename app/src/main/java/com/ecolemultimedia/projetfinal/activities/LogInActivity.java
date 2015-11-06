@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +14,10 @@ import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -70,12 +73,26 @@ public class LogInActivity extends AppCompatActivity {
                         setCurrentUserSharedPreferences(authData.getUid());
 
                         //TODO: check if user informations are filled
-                        //if not :
-                        //Intent intent = new Intent(this, InitialUserInformationsActivity.class);
-                        //startActivity(intent);
-                        //else :
-                        Intent intent = new Intent(LogInActivity.this, MapActivity.class);
-                        startActivity(intent);
+                        mFirebaseRef.child("users/" + authData.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                // do some stuff once
+
+                                if(String.valueOf(snapshot.child("sex").getValue()) == "null" || String.valueOf(snapshot.child("birthdate").getValue()) == "null" || String.valueOf(snapshot.child("location").getValue()) == "null" || String.valueOf(snapshot.child("selfies").getValue()) == "null" || String.valueOf(snapshot.child("username").getValue()) == "null" || String.valueOf(snapshot.child("usedSelfieIndex").getValue()) == "null") {
+                                    //TODO: go to Initial...Activity
+                                    Intent intent = new Intent(LogInActivity.this, MapActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(LogInActivity.this, MapActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+                                Log.d("•••", "error");
+                            }
+                        });
                     }
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
@@ -98,13 +115,32 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void setCurrentUserSharedPreferences(String uid) {
-        SharedPreferences pref = getSharedPreferences("currentUser", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        //TODO: set infos with DB
-        //editor.putString("uid", "");
-        //editor.putString("email", String.valueOf(mEmailET.getText()));
-        //editor.putBoolean("isVisible", true);
-        editor.commit();
+        mFirebaseRef.child("users/" + uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // do some stuff once
+                SharedPreferences pref = getSharedPreferences("currentUser", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                //TODO: set infos with DB
+                if (Boolean.valueOf((Boolean) snapshot.child("isVisible").getValue())) {
+                    Log.d("•••", "bool ok");
+                }
+                editor.putString("uid", String.valueOf(snapshot.child("uid").getValue()));
+                editor.putString("email", String.valueOf(snapshot.child("email").getValue()));
+                editor.putBoolean("isVisible", Boolean.valueOf((Boolean) snapshot.child("isVisible").getValue()));
+                Log.d("•••", String.valueOf(snapshot.child("sex").getValue()));
+                if (String.valueOf(snapshot.child("sex").getValue()) != null) {
+                    editor.putString("sex", String.valueOf(snapshot.child("sex").getValue()));
+                }
+                //TODO: fill other fields
+                editor.commit();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("•••", "azazaz");
+            }
+        });
     }
 
     public void goToSignInActivity(View view) {
@@ -112,18 +148,4 @@ public class LogInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void clickOnFacebookConnectButton(View view) {
-//        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-//            @Override
-//            public void done(ParseUser user, ParseException err) {
-//                if (user == null) {
-//                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-//                } else if (user.isNew()) {
-//                    Log.d("MyApp", "User signed up and logged in through Facebook!");
-//                } else {
-//                    Log.d("MyApp", "User logged in through Facebook!");
-//                }
-//            }
-//        });
-    }
 }

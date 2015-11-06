@@ -3,6 +3,7 @@ package com.ecolemultimedia.projetfinal.activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,7 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.ecolemultimedia.projetfinal.models.User;
 import com.ecolemultimedia.projetfinal.views.ViewMenu;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -36,11 +42,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private GoogleMap gMap;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    Firebase mFirebaseRef;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com");
 
         ui_rl_menu=(RelativeLayout)findViewById(R.id.ui_rl_menu);
         ViewMenu viewMenu= new ViewMenu(this, MapActivity.this);
@@ -129,10 +138,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
-    public void updateUserLastLocationWithLocation(Location location) {
+    public void updateUserLastLocationWithLocation(final Location location) {
         //ParseGeoPoint userLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
         //ParseUser.getCurrentUser().put("lastLocation", userLocation);
         //ParseUser.getCurrentUser().saveInBackground();
+
+        mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // do some stuff once
+                SharedPreferences pref = getSharedPreferences("currentUser", MODE_PRIVATE);
+                //TODO set other fields
+                User currentUser = new User(pref.getString("uid", ""), pref.getString("email", ""), pref.getBoolean("isVisible", true));
+                currentUser.setLocation(location);
+
+                Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
+                user.setValue(currentUser);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("•••", "azazaz");
+            }
+        });
     }
 
     public void updateCameraWithLocation(Location location) {

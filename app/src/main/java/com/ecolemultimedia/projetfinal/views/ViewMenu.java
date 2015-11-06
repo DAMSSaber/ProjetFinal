@@ -83,7 +83,7 @@ public class ViewMenu extends RelativeLayout {
         ui_rl_menu_chat.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(m_context, ChatActivity.class);
+                Intent intent= new Intent(m_context, InitialUserInformationsActivity.class);
                 m_context.startActivity(intent);
                 activity.overridePendingTransition(0, 0);
                // activity.finish();

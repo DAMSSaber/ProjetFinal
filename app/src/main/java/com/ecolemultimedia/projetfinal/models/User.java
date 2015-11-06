@@ -73,4 +73,8 @@ public class User {
     public Date getBirthdate() {
         return birthdate;
     }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }

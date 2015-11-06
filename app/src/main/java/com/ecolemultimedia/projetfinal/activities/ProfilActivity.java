@@ -57,6 +57,7 @@ public class ProfilActivity extends AppCompatActivity {
 
     public void disconnect(View view) {
         mFirebaseRef.unauth();
+        getApplicationContext().getSharedPreferences("currentUser", MODE_PRIVATE).edit().clear().commit();
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
