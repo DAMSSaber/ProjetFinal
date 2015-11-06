@@ -3,6 +3,8 @@ package com.ecolemultimedia.projetfinal.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -15,12 +17,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class ListUserChatActivity extends Activity {
@@ -56,18 +56,20 @@ public class ListUserChatActivity extends Activity {
             public void onDataChange(DataSnapshot snapshot) {
 
                 try {
-                    JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
 
-                    Log.v("Debeug", "--jsonObject----" + jsonObject);
-                    Iterator x = jsonObject.keys();
-                   /* JSONArray jsonArray = new JSONArray();
-                    for (int i = 0; i < jsonArray.length(); i++) {
 
+                    for (int i = 0; i < snapshot.getChildrenCount(); i++) {
+
+                    }
+
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        User post = postSnapshot.getValue(User.class);
                         User user = new User();
-                        user.initUser(jsonArray.getJSONObject(i));
+                        JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
+                        user.initUser(jsonObject);
                         listUser.add(user);
-                    }*/
-
+                    }
+                    Log.v("Debeug", "size:" + listUser.size());
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -81,6 +83,16 @@ public class ListUserChatActivity extends Activity {
             }
         });
 
+
+
+        ui_list_user.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+            }
+        });
 
     }
 

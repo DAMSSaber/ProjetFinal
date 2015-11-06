@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ui_rl_menu"
-        android:background="@android:color/white"></TextView>
+        android:background="@android:color/black"></TextView>
 
 
 
