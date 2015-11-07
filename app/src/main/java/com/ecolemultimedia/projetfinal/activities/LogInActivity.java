@@ -83,7 +83,7 @@ public class LogInActivity extends AppCompatActivity {
 
                                 if(String.valueOf(snapshot.child("sex").getValue()) == "null" || String.valueOf(snapshot.child("birthdate").getValue()) == "null" || String.valueOf(snapshot.child("location").getValue()) == "null" || String.valueOf(snapshot.child("selfies").getValue()) == "null" || String.valueOf(snapshot.child("username").getValue()) == "null" || String.valueOf(snapshot.child("usedSelfieIndex").getValue()) == "null") {
                                     //TODO: go to Initial...Activity
-                                    Intent intent = new Intent(LogInActivity.this, MapActivity.class);
+                                    Intent intent = new Intent(LogInActivity.this, InitialUserInformationsActivity.class);
                                     startActivity(intent);
                                 } else {
                                     Intent intent = new Intent(LogInActivity.this, MapActivity.class);

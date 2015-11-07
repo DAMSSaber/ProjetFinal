@@ -111,6 +111,8 @@ public class ListUserChatActivity extends Activity {
                             chatRoom.child("users").setValue(users);
 
                             mCurrentRoomId = chatRoom.getKey();
+
+                            //set chatroom for current user
                             mFirebaseRef.child(mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot snapshot) {
@@ -120,6 +122,30 @@ public class ListUserChatActivity extends Activity {
                                         currentUser.initUser(jsonObject);
                                         currentUser.addLink(mCurrentRoomId, listUser.get(mClickedUserId).getUid());
                                         Firebase user = mFirebaseRef.child(mFirebaseRef.getAuth().getUid());
+                                        user.setValue(currentUser);
+
+                                        Log.d("•••", "créer intent en pasant la clé " + mCurrentRoomId);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    Log.d("•••", "azazaz");
+                                }
+                            });
+
+                            //set chatroom for other user
+                            mFirebaseRef.child(listUser.get(mClickedUserId).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                                        User currentUser = new User();
+                                        currentUser.initUser(jsonObject);
+                                        currentUser.addLink(mCurrentRoomId, listUser.get(mClickedUserId).getUid());
+                                        Firebase user = mFirebaseRef.child(listUser.get(mClickedUserId).getUid());
                                         user.setValue(currentUser);
 
                                         Log.d("•••", "créer intent en pasant la clé " + mCurrentRoomId);

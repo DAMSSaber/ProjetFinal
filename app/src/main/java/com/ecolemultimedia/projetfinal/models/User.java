@@ -109,7 +109,12 @@ public class User {
     }
 
     public void addLink(String key, String value) {
-        this.links.put(key, value);
+        if(this.links != null) {
+            this.links.put(key, value);
+        } else {
+            this.links = new HashMap<String, String>();
+            this.links.put(key, value);
+        }
     }
 
     public void initUser(JSONObject jsonObject) {

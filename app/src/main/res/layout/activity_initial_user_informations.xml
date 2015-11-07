@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_inscrit">
+    android:background="@drawable/bg_2">
 
 
     <ScrollView
@@ -114,7 +114,7 @@
                 <DatePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/age_picker"
+                    android:id="@+id/birthdate_picker"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
@@ -129,13 +129,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save_button_string"
-                    android:layout_below="@+id/age_picker"
+                    android:layout_below="@+id/birthdate_picker"
                     android:background="@color/color_yellow"
                     android:padding="10dp"
                     android:textColor="@color/color_grey_dark"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:onClick="saveUserInformations" />
             </RelativeLayout>
 
         </RelativeLayout>

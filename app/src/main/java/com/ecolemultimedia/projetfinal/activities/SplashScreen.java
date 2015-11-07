@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.parse.Parse;
 
 
@@ -60,13 +64,25 @@ public class SplashScreen extends Activity {
 
     public void checkIfLogged() {
         if (mFirebaseRef.getAuth() != null) {
-            //TODO: check if user informations are filled
-            //if not :
-            //Intent intent = new Intent(splashScreen.this, InitialUserInformationsActivity.class);
-            //startActivity(intent);
-            //else :
-            Intent intent = new Intent(SplashScreen.this, MapActivity.class);
-            startActivity(intent);
+            mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    // do some stuff once
+
+                    if (String.valueOf(snapshot.child("sex").getValue()) == "null" || String.valueOf(snapshot.child("birthdate").getValue()) == "null" || String.valueOf(snapshot.child("username").getValue()) == "null") {
+                        Intent intent = new Intent(SplashScreen.this, InitialUserInformationsActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(SplashScreen.this, MapActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Log.d("•••", "error");
+                }
+            });
         } else {
             Intent intent = new Intent(SplashScreen.this, LogInActivity.class);
             startActivity(intent);
