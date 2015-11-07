@@ -34,6 +34,9 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -139,16 +142,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void updateUserLastLocationWithLocation(final Location location) {
-        //ParseGeoPoint userLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-        //ParseUser.getCurrentUser().put("lastLocation", userLocation);
-        //ParseUser.getCurrentUser().saveInBackground();
 
         mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 CustomLocation loc = new CustomLocation();
                 loc.initAndroidLocation(location);
-
+                /*//Custom class not supported with function updateChildren()
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("location", loc);
+                mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).updateChildren(map);
+                */
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
                     User currentUser = new User();

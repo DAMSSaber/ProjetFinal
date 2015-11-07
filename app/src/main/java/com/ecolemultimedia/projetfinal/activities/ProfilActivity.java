@@ -3,6 +3,7 @@ package com.ecolemultimedia.projetfinal.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +13,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.components.AppController;
 import com.ecolemultimedia.projetfinal.views.ViewMenu;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.parse.ParseUser;
 
 public class ProfilActivity extends AppCompatActivity {
@@ -34,6 +38,22 @@ public class ProfilActivity extends AppCompatActivity {
         mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com/");
 
         mUserProfilSelfie = (ImageView)findViewById(R.id.user_profil_selfie);
+
+
+
+        mFirebaseRef.child("users/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // do some stuff once
+                Log.d("•••", "" + snapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("•••", "azazaz");
+            }
+        });
+
 
         /*
         String userProfilSelfieUrl = "http://1.bp.blogspot.com/-zuajEFAjpmw/VVwsMcfHyPI/AAAAAAAABHk/T5r-HYMy4No/s1600/Screenshot_2015-05-20-10-55-23.png";

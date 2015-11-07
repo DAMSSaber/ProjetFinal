@@ -30,4 +30,6 @@
     <string name="shown_username_hint_string">Pseudonyme</string>
     <string name="age_label">DATE DE NAISSANCE</string>
     <string name="shown_username_label">PSEUDONYME</string>
+    <string name="man_string">homme</string>
+    <string name="woman_string">femme</string>
 </resources>

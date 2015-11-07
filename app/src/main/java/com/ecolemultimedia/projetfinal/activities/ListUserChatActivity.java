@@ -21,6 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class ListUserChatActivity extends Activity {
@@ -32,6 +35,8 @@ public class ListUserChatActivity extends Activity {
     private ArrayList<User> listUser = null;
 
     private Firebase mFirebaseRef;
+    private int mClickedUserId;
+    private String mCurrentRoomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +62,16 @@ public class ListUserChatActivity extends Activity {
 
                 try {
 
-
-                    for (int i = 0; i < snapshot.getChildrenCount(); i++) {
-
-                    }
-
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         User post = postSnapshot.getValue(User.class);
                         User user = new User();
                         JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         user.initUser(jsonObject);
-                        listUser.add(user);
+                        if(String.valueOf(user.getUid()) != String.valueOf(mFirebaseRef.getAuth().getUid())) {
+                            listUser.add(user);
+                        }
                     }
-                    Log.v("Debeug", "size:" + listUser.size());
+                    Log.d("•••", "size : " + listUser.size());
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -83,14 +85,64 @@ public class ListUserChatActivity extends Activity {
             }
         });
 
-
-
         ui_list_user.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mClickedUserId = position;
+                Log.d("•••", "id user clicked : " + listUser.get(position).getUid());
 
+                mFirebaseRef.child(mFirebaseRef.getAuth().getUid() + "/links").orderByValue().equalTo(listUser.get(position).getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if(snapshot.getValue() != null) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                                Iterator key = jsonObject.keys();
+                                Log.d("•••", "créer intent en passant la clé " + key.next());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
 
+                            Firebase chatRoom = mFirebaseRef.getParent().child("chat").push();
+                            ArrayList<String> users = new ArrayList<String>();
+                            users.add(mFirebaseRef.getAuth().getUid());
+                            users.add(listUser.get(mClickedUserId).getUid());
+                            chatRoom.child("users").setValue(users);
 
+                            mCurrentRoomId = chatRoom.getKey();
+                            mFirebaseRef.child(mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                                        User currentUser = new User();
+                                        currentUser.initUser(jsonObject);
+                                        currentUser.addLink(mCurrentRoomId, listUser.get(mClickedUserId).getUid());
+                                        Firebase user = mFirebaseRef.child(mFirebaseRef.getAuth().getUid());
+                                        user.setValue(currentUser);
+
+                                        Log.d("•••", "créer intent en pasant la clé " + mCurrentRoomId);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    Log.d("•••", "azazaz");
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
+                //listUser.get(position).getUid()
             }
         });
 

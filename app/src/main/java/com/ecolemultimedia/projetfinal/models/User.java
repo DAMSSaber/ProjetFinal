@@ -6,6 +6,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by damien on 05/11/2015.
@@ -21,6 +25,8 @@ public class User {
     Integer usedSelfieIndex=null;
     String sex=null;
     String birthdate=null;
+    Map<String, String> links=null;
+
 
     public String getUid() {
         return uid;
@@ -94,6 +100,18 @@ public class User {
         this.birthdate = birthdate;
     }
 
+    public Map<String, String> getLinks() {
+        return links;
+    }
+
+    public void setLinks(Map<String, String> links) {
+        this.links = links;
+    }
+
+    public void addLink(String key, String value) {
+        this.links.put(key, value);
+    }
+
     public void initUser(JSONObject jsonObject) {
 
 
@@ -121,6 +139,17 @@ public class User {
 
             if (jsonObject.has("sex")) {
                 setSex(jsonObject.getString("sex"));
+            }
+
+            if (jsonObject.has("links")) {
+                Map<String, String> list = new HashMap<String, String>();
+                //JSONObject json = new JSONObject();
+                for (Iterator iterator = jsonObject.getJSONObject("links").keys(); iterator.hasNext();) {
+                    String key = String.valueOf(iterator.next());
+                    String value = String.valueOf(jsonObject.getJSONObject("links").get(key));
+                    list.put(key, value);
+                }
+                setLinks(list);
             }
 
             if(jsonObject.has("location")){
