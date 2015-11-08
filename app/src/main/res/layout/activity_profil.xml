@@ -2,121 +2,165 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundprofil"
     android:gravity="top|center">
+
+
+    <Button
+        android:id="@+id/disconnect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="disconnect"
+        android:text="@string/disconnect_label"
+        android:textSize="10dp" />
+
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/disconnect_button"
         android:layout_above="@+id/ui_rl_menu"
-        android:background="@android:color/white"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/color_grey_light_low_opacity"
+            android:paddingLeft="20dp">
 
             <ImageView
                 android:id="@+id/user_profil_selfie"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/silhouette" />
+                android:background="@color/color_grey_dark"
+                android:padding="1dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile" />
 
             <TextView
                 android:id="@+id/username_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_profil_selfie"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+
                 android:text="@string/username_upper_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/username_label"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@+id/username_label"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/user_profil_selfie"
                 android:text="username"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/black"
+
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/username"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/username_label"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+
                 android:text="@string/email_upper_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/email_label"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
+                android:layout_below="@+id/username_label"
+
+                android:layout_toRightOf="@+id/email_label"
+                android:layout_marginTop="10dp"
                 android:text="email@mail.com"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginLeft="10dp"
+
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/age_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/email"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/email_label"
                 android:layout_marginTop="10dp"
                 android:text="@string/age_upper_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_marginLeft="20dp"
+
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/age_label"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@+id/age_label"
+                android:layout_marginTop="10dp"
                 android:text="XX ans"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginLeft="10dp"
+
+                android:layout_below="@+id/email_label"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/sex_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/age"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/age_label"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+
                 android:text="@string/sex_upper_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sex_label"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@+id/sex_label"
+                android:layout_marginTop="10dp"
                 android:text="homme"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/age_label"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
 
             <Button
-                android:id="@+id/disconnect_button"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:onClick="disconnect"
-                android:text="@string/disconnect_label"
-                android:textSize="10dp" />
+                android:id="@+id/ui_btn_valider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="EDITER"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_below="@id/sex_label"
+                android:background="@color/color_yellow"/>
 
         </RelativeLayout>
     </ScrollView>

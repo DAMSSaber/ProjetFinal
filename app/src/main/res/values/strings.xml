@@ -17,10 +17,10 @@
     <string name="inscription_string">INSCRIPTION</string>
     <string name="facebook_app_id">1927295344162426</string>
     <string name="title_activity_profil">ProfilActivity</string>
-    <string name="username_upper_label">NOM D\'UTILISATEUR</string>
-    <string name="age_upper_label">ÂGE</string>
-    <string name="sex_upper_label">SEXE</string>
-    <string name="email_upper_label">ADRESSE EMAIL</string>
+    <string name="username_upper_label">PSEUDO :</string>
+    <string name="age_upper_label">ÂGE   :</string>
+    <string name="sex_upper_label">SEXE  :</string>
+    <string name="email_upper_label">EMAIL  :</string>
     <string name="disconnect_label">se déconnecter</string>
     <string name="title_activity_edit_profil">EditProfilActivity</string>
     <string name="or_label">OU</string>
