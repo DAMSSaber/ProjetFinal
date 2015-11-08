@@ -1,25 +1,19 @@
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@android:color/white">
-
-
-<ListView
-    android:id="@+id/ui_list_user"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@id/ui_rl_menu"
-    android:background="@android:color/white"></ListView>
+    android:background="@drawable/backgroundprofil">
 
 
+    <ListView
+        android:id="@+id/ui_list_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ui_rl_menu"></ListView>
 
 
-
-
-<RelativeLayout
-    android:id="@id/ui_rl_menu"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"></RelativeLayout>
+    <RelativeLayout
+        android:id="@id/ui_rl_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"></RelativeLayout>
 </RelativeLayout>

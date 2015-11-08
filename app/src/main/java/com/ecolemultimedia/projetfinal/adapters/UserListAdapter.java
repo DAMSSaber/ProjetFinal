@@ -75,9 +75,9 @@ public class UserListAdapter extends ArrayAdapter<String> {
         }
 
         viewHolder = (CellViewHolder) rowView.getTag();
-        if (listUser.get(position).getEmail() != null) {
+        if (listUser.get(position).getUsername() != null) {
             viewHolder.ui_name_user.setText(listUser.get(position)
-                    .getEmail());
+                    .getUsername());
         }
 
 

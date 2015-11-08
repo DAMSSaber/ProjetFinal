@@ -5,26 +5,12 @@
     android:background="@drawable/backgroundprofil"
     android:gravity="top|center">
 
-
-    <Button
-        android:id="@+id/disconnect_button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="disconnect"
-        android:text="@string/disconnect_label"
-        android:textSize="10dp" />
-
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ui_rl_menu"
         android:layout_alignParentTop="true"
-        android:layout_below="@id/disconnect_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp">
 

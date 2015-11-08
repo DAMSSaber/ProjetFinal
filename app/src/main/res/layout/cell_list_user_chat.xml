@@ -1,16 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/color_grey_dark"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:id="@+id/ui_id_profil"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_profil" />
 
 
     <TextView
         android:id="@+id/ui_name_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ui_rl_menu"
-        android:background="@android:color/black"></TextView>
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAber"
+        android:layout_toRightOf="@id/ui_id_profil"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/color_yellow"></TextView>
 
 
 </RelativeLayout>

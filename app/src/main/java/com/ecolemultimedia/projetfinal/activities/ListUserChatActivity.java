@@ -1,6 +1,7 @@
 package com.ecolemultimedia.projetfinal.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 
 public class ListUserChatActivity extends Activity {
@@ -62,12 +61,14 @@ public class ListUserChatActivity extends Activity {
 
                 try {
 
+
+                    listUser.clear();
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         User post = postSnapshot.getValue(User.class);
                         User user = new User();
                         JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         user.initUser(jsonObject);
-                        if(String.valueOf(user.getUid()) != String.valueOf(mFirebaseRef.getAuth().getUid())) {
+                        if (String.valueOf(user.getUid()) != String.valueOf(mFirebaseRef.getAuth().getUid())) {
                             listUser.add(user);
                         }
                     }
@@ -94,11 +95,15 @@ public class ListUserChatActivity extends Activity {
                 mFirebaseRef.child(mFirebaseRef.getAuth().getUid() + "/links").orderByValue().equalTo(listUser.get(position).getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null) {
+                        if (snapshot.getValue() != null) {
                             try {
                                 JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
                                 Iterator key = jsonObject.keys();
-                                Log.d("•••", "créer intent en passant la clé " + key.next());
+
+                                Intent intent = new Intent(ListUserChatActivity.this, ChatActivity.class);
+                                intent.putExtra("mCurrentRoom", String.valueOf(key.next()));
+                                startActivity(intent);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -124,7 +129,11 @@ public class ListUserChatActivity extends Activity {
                                         Firebase user = mFirebaseRef.child(mFirebaseRef.getAuth().getUid());
                                         user.setValue(currentUser);
 
-                                        Log.d("•••", "créer intent en pasant la clé " + mCurrentRoomId);
+                                        Intent intent = new Intent(ListUserChatActivity.this, ChatActivity.class);
+                                        intent.putExtra("mCurrentRoom", mCurrentRoomId);
+                                        startActivity(intent);
+
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -149,6 +158,8 @@ public class ListUserChatActivity extends Activity {
                                         user.setValue(currentUser);
 
                                         Log.d("•••", "créer intent en pasant la clé " + mCurrentRoomId);
+
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
