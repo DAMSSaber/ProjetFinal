@@ -81,7 +81,7 @@ public class LogInActivity extends AppCompatActivity {
                             public void onDataChange(DataSnapshot snapshot) {
                                 // do some stuff once
 
-                                if(String.valueOf(snapshot.child("sex").getValue()) == "null" || String.valueOf(snapshot.child("birthdate").getValue()) == "null" || String.valueOf(snapshot.child("location").getValue()) == "null" || String.valueOf(snapshot.child("selfies").getValue()) == "null" || String.valueOf(snapshot.child("username").getValue()) == "null" || String.valueOf(snapshot.child("usedSelfieIndex").getValue()) == "null") {
+                                if(String.valueOf(snapshot.child("sex").getValue()) == "null" || String.valueOf(snapshot.child("birthdate").getValue()) == "null" || String.valueOf(snapshot.child("username").getValue()) == "null") {
                                     //TODO: go to Initial...Activity
                                     Intent intent = new Intent(LogInActivity.this, InitialUserInformationsActivity.class);
                                     startActivity(intent);
@@ -117,6 +117,7 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
+    //TODO: supprimer
     public void setCurrentUserSharedPreferences(String uid) {
         mFirebaseRef.child("users/" + uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

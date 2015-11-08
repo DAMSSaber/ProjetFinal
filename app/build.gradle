@@ -49,4 +49,6 @@ dependencies {
     compile 'com.parse:parse-android:1.+'
     compile 'com.android.support:design:23.1.0'
     compile 'com.firebase:firebase-client-android:2.4.0+'
+    compile 'com.firebase:geofire:1.1.0+'
+    compile 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
 }

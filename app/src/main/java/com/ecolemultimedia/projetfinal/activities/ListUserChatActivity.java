@@ -153,7 +153,7 @@ public class ListUserChatActivity extends Activity {
                                         JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
                                         User currentUser = new User();
                                         currentUser.initUser(jsonObject);
-                                        currentUser.addLink(mCurrentRoomId, listUser.get(mClickedUserId).getUid());
+                                        currentUser.addLink(mCurrentRoomId, mFirebaseRef.getAuth().getUid());
                                         Firebase user = mFirebaseRef.child(listUser.get(mClickedUserId).getUid());
                                         user.setValue(currentUser);
 

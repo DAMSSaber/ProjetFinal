@@ -48,6 +48,8 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         mBirthdateDatePicker = (DatePicker)findViewById(R.id.birthdate_picker);
 
         mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com");
+
+        //TODO: allow to pick birthdate for people beetween 18 & 100
     }
 
     public void saveUserInformations(View view) {
