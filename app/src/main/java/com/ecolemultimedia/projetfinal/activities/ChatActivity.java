@@ -3,7 +3,10 @@ package com.ecolemultimedia.projetfinal.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,6 +30,7 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -44,6 +48,9 @@ public class ChatActivity extends Activity {
     private String FIREBASE_URL = null;
     private ValueEventListener mConnectedListener;
     private MessageListAdapter mChatListAdapter;
+
+
+    private Button ui_btn_selfie = null;
 
     private ArrayList<Message> listMessage = null;
 
@@ -63,6 +70,16 @@ public class ChatActivity extends Activity {
         ViewMenu viewMenu = new ViewMenu(this, ChatActivity.this);
         viewMenu.init(1);
         ui_rl_menu.addView(viewMenu);
+
+        ui_btn_selfie = (Button) findViewById(R.id.ui_btn_selfie);
+        ui_btn_selfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Intent intent = new Intent(ChatActivity.this, CameraActivity.class);
+              //  startActivity(intent);
+                sendMessageImage();
+            }
+        });
 
         // Setup our Firebase mFirebaseRef
         mFirebaseRef = new Firebase(FIREBASE_URL);
@@ -108,8 +125,8 @@ public class ChatActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    sendMessage();
-                    ui_lis_message.setSelection(mChatListAdapter.getCount() - 1);
+                    sendMessageText();
+                    ui_lis_message.setSelection(mChatListAdapter.getCount());
                 }
                 return true;
             }
@@ -118,8 +135,8 @@ public class ChatActivity extends Activity {
         ui_btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage();
-                ui_lis_message.setSelection(mChatListAdapter.getCount() - 1);
+                sendMessageText();
+                ui_lis_message.setSelection(mChatListAdapter.getCount());
             }
         });
 
@@ -128,7 +145,7 @@ public class ChatActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println(snapshot.getValue());
-                Log.d("•••", "size : " + snapshot.getValue());
+            //    Log.d("•••", "size : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 listMessage.clear();
@@ -138,7 +155,6 @@ public class ChatActivity extends Activity {
                         jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         Message currentMessage = new Message();
                         currentMessage.initMessage(jsonObject);
-
                         listMessage.add(currentMessage);
                         mChatListAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
@@ -157,11 +173,13 @@ public class ChatActivity extends Activity {
 
         mChatListAdapter = new MessageListAdapter(this, listMessage, ChatActivity.this);
         ui_lis_message.setAdapter(mChatListAdapter);
+
+
         mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
-                ui_lis_message.setSelection(mChatListAdapter.getCount() - 1);
+                ui_lis_message.setSelection(mChatListAdapter.getCount());
             }
         });
 
@@ -169,7 +187,7 @@ public class ChatActivity extends Activity {
     }
 
 
-    private void sendMessage() {
+    private void sendMessageText() {
         String input = ui_edit_text.getText().toString();
         if (!input.equals("")) {
             // Create our 'model', a Chat object
@@ -181,6 +199,28 @@ public class ChatActivity extends Activity {
             mFirebaseRef.push().setValue(chat);
             ui_edit_text.setText("");
         }
+    }
+
+    private void sendMessageImage() {
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),
+                R.drawable.profile);//your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
+        Log.v("***","image string :"+imageFile);
+
+
+        Message chat = new Message();
+        chat.setAuthor(mUsername);
+        chat.setMessage(imageFile);
+        chat.setType("image");
+        // Create a new, auto-generated child of that chat location, and save our chat data there
+        mFirebaseRef.push().setValue(chat);
     }
 
     @Override

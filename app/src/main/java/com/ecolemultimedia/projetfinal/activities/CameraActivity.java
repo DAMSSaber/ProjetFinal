@@ -7,12 +7,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -25,30 +20,32 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class CameraActivity extends Activity  {
+public class CameraActivity extends Activity {
 
-    private static final String TAG = "CameraActivity" ;
+    private static final String TAG = "CameraActivity";
 
-    private ImageView captureButton=null;
-    private ImageView switchButton=null;
+    private ImageView captureButton = null;
+    private ImageView switchButton = null;
     public String mPathPicture;
 
     protected static final int MEDIA_TYPE_IMAGE = 0;
 
-    private Camera mCamera=null;
-    private CameraPreview mPreview=null;
-    private Camera.PictureCallback mPicture=null;
-    FrameLayout preview=null;
+    private Camera mCamera = null;
+    private CameraPreview mPreview = null;
+    private Camera.PictureCallback mPicture = null;
+    FrameLayout preview = null;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview);
 
         // Create an instance of Camera
-        mCamera = mCamera.open(1);
+        if (mCamera == null) {
+            mCamera = mCamera.open(1);
+        }
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Create our Preview view and set it as the content of our activity.
@@ -63,12 +60,11 @@ public class CameraActivity extends Activity  {
                     public void onClick(View v) {
                         takePhoto();
 
-
                     }
                 }
         );
 
-        switchButton=  (ImageView) findViewById(R.id.button_switch);
+        switchButton = (ImageView) findViewById(R.id.button_switch);
         switchButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -89,6 +85,7 @@ public class CameraActivity extends Activity  {
     @Override
     public void onPause() {
         super.onPause();
+
     }
 
 
@@ -134,7 +131,7 @@ public class CameraActivity extends Activity  {
         String timeStamp =
                 new SimpleDateFormat("yyyMMdd_HHmmss", Locale.UK).format(new Date());
         if (type == MEDIA_TYPE_IMAGE) {
-            File	pic =	  new File(dir.getPath() + File.separator + "IMG_"
+            File pic = new File(dir.getPath() + File.separator + "IMG_"
                     + timeStamp + ".png");
             mPathPicture = pic.getPath();
             return pic;
@@ -142,4 +139,7 @@ public class CameraActivity extends Activity  {
             return null;
         }
     }
+
+
+
 }

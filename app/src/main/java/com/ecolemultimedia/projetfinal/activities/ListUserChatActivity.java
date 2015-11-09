@@ -64,7 +64,7 @@ public class ListUserChatActivity extends Activity {
 
                     listUser.clear();
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        User post = postSnapshot.getValue(User.class);
+                     //   User post = postSnapshot.getValue(User.class);
                         User user = new User();
                         JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         user.initUser(jsonObject);

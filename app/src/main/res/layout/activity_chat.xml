@@ -4,6 +4,17 @@
     android:background="@android:color/white">
 
 
+    <Button
+        android:id="@+id/ui_btn_selfie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:background="@color/color_yellow"
+        android:text="Selfie"
+        android:textColor="@android:color/white" />
+
     <ListView
         android:id="@+id/ui_lis_message"
         android:layout_width="match_parent"
