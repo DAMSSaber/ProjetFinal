@@ -47,6 +47,9 @@ import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,6 +74,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     RangeSeekBar<Integer> rangeSeekBar;
     CheckBox manCB;
     CheckBox womanCB;
+    Double mDistance;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -91,6 +95,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         manCB.setChecked(true);
         womanCB = (CheckBox)findViewById(R.id.woman_checkbox);
         womanCB.setChecked(true);
+        //set maximum visible users distance
+        mDistance= 5.0;
 
         //set 2 thumbs seekbar
         rangeSeekBar = new RangeSeekBar<Integer>(this);
@@ -108,6 +114,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         gMap.getUiSettings().setMyLocationButtonEnabled(false);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
+
+
+
+        try {
+            String string = "test test";
+            String encodedString = URLEncoder.encode(string, "UTF-8");
+            String decodedString = URLDecoder.decode(encodedString, "UTF-8");
+
+
+            Log.d("•••", "string : " + string);
+            Log.d("•••", "encoded string : " + encodedString);
+            Log.d("•••", "decoded string : " + decodedString);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -198,6 +219,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 */
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                    Log.d("•••", "" + jsonObject);
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
                     currentUser.setLocation(loc);
@@ -210,7 +232,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.d("•••", "azazaz");
+                Log.d("•••", "error");
             }
         });
     }
@@ -218,11 +240,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void updateMapWithMarkers(Location location, Double distance) {
         gMap.clear();
         GeoQuery geoQuery = mFirebaseGeoRef.queryAtLocation(new GeoLocation(location.getLatitude(), location.getLongitude()), distance);
+        geoQuery.removeAllListeners();
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 System.out.println(String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
-                if (key != mFirebaseRef.getAuth().getUid()) {
+                if (!key.equals(mFirebaseRef.getAuth().getUid())) {
 
                     mFirebaseRef.child("users/" + key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -235,10 +258,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                                 if (getUserAge(currentUser.getBirthdate()) <= rangeSeekBar.getSelectedMaxValue() && getUserAge(currentUser.getBirthdate()) >= rangeSeekBar.getSelectedMinValue()) {
                                     if ((manCB.isChecked() && String.valueOf(currentUser.getSex()).equals("man")) || (womanCB.isChecked() && String.valueOf(currentUser.getSex()).equals("woman"))) {
                                         if(currentUser.getLocation() != null) {
-                                            gMap.addMarker(new MarkerOptions().position(new LatLng(currentUser.getLocation().latitude, currentUser.getLocation().longitude)).title(currentUser.getUid()));
+                                            gMap.addMarker(new MarkerOptions().position(new LatLng(currentUser.getLocation().latitude, currentUser.getLocation().longitude)).title(currentUser.getUsername()));
                                         }
                                     }
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -296,7 +318,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         Log.d("•••", "" + manCB.isChecked());
         Log.d("•••", "" + womanCB.isChecked());
-        updateMapWithMarkers(mLastLocation, 2.0);
+        updateMapWithMarkers(mLastLocation, mDistance);
 
     }
 
@@ -310,7 +332,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             updateCameraWithLocation(mLastLocation);
             updateUserLastLocationWithLocation(mLastLocation);
-            updateMapWithMarkers(mLastLocation, 2.0);
+            updateMapWithMarkers(mLastLocation, mDistance);
         }
     }
 

@@ -4,6 +4,10 @@ package com.ecolemultimedia.projetfinal.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 public class Message {
 
     private String message = null;
@@ -15,7 +19,14 @@ public class Message {
     public void initMessage(JSONObject jsonObject) throws JSONException {
 
         if (jsonObject.has("message")) {
-            setMessage(jsonObject.getString("message"));
+            String encodedString = null;
+            try {
+                encodedString = URLEncoder.encode(jsonObject.getString("message"), "UTF-8");
+                this.message = encodedString;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            //setMessage(jsonObject.getString("message"));
         }
         if (jsonObject.has("author")) {
             setAuthor(jsonObject.getString("author"));
@@ -33,11 +44,26 @@ public class Message {
     }
 
     public String getMessage() {
-        return message;
+        String decodedString = null;
+        try {
+            decodedString = URLDecoder.decode(message, "UTF-8");
+            return decodedString;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        //return this.message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+
+        String encodedString = null;
+        try {
+            encodedString = URLEncoder.encode(message, "UTF-8");
+            this.message = encodedString;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAuthor() {

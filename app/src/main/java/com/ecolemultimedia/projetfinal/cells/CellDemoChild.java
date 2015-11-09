@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.ecolemultimedia.projetfinal.R;
 import com.ecolemultimedia.projetfinal.models.Message;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 
 /**
  * Created by saberdams on 10/07/15.
@@ -57,7 +60,7 @@ public class CellDemoChild extends RelativeLayout {
                 message.setText(mess.getMessage());
             } else {
                 Log.v("Debeug", "Image :" + mess.getMessage());
-               // selfie.setImageBitmap(decodeBase64(mess.getMessage()));
+                selfie.setImageBitmap(decodeBase64(mess.getMessage()));
             }
 
         }
@@ -72,7 +75,15 @@ public class CellDemoChild extends RelativeLayout {
     }
 
     public static Bitmap decodeBase64(String input) {
-        byte[] decodedByte = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        String decodedString = null;
+        try {
+            decodedString = URLDecoder.decode(input, "UTF-8");
+            byte[] decodedByte = Base64.decode(decodedString, 0);
+            return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.d("•••", e.getMessage());
+            return null;
+        }
     }
 }

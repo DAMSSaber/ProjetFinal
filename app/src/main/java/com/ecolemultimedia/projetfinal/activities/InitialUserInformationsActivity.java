@@ -27,6 +27,9 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class InitialUserInformationsActivity extends AppCompatActivity {
 
     private Firebase mFirebaseRef;
@@ -47,44 +50,57 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         mSexRadioGroup = (RadioGroup)findViewById(R.id.sex_radio_group);
         mBirthdateDatePicker = (DatePicker)findViewById(R.id.birthdate_picker);
 
+        long yourDateMillis = System.currentTimeMillis() - (18 * 365 * 24 * 60 * 60 * 1000);
+        mBirthdateDatePicker.setMaxDate(yourDateMillis);
+
         mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com");
 
         //TODO: allow to pick birthdate for people beetween 18 & 100
     }
 
     public void saveUserInformations(View view) {
-        mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                try {
-                    JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
-                    User currentUser = new User();
-                    currentUser.initUser(jsonObject);
-                    currentUser.setUsername(String.valueOf(mUsernameET.getText()));
-                    String birthdateString = "" + mBirthdateDatePicker.getDayOfMonth() + "-" + mBirthdateDatePicker.getMonth() + "-" + mBirthdateDatePicker.getYear();
-                    Log.d("•••", birthdateString);
-                    currentUser.setBirthdate(birthdateString);
-                    String sexString = null;
-                    if(mSexRadioGroup.getCheckedRadioButtonId() == mSexManRadio.getId()) {
-                        sexString = "man";
-                    } else if(mSexRadioGroup.getCheckedRadioButtonId() == mSexWomanRadio.getId()) {
-                        sexString = "woman";
+        //TODO: add test on selfie
+        if(mUsernameET.getText().equals(null)) {
+            //TODO: utiliser string
+            Toast noUserame = Toast.makeText(getApplicationContext(), "Veuillez remplir votre nom d'utilisateur", Toast.LENGTH_LONG);
+        } else {
+            mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                        User currentUser = new User();
+                        currentUser.initUser(jsonObject);
+                        currentUser.setUsername(String.valueOf(mUsernameET.getText()));
+                        String birthdateString = "" + mBirthdateDatePicker.getDayOfMonth() + "-" + mBirthdateDatePicker.getMonth() + "-" + mBirthdateDatePicker.getYear();
+                        currentUser.setBirthdate(birthdateString);
+                        String sexString = null;
+                        if (mSexRadioGroup.getCheckedRadioButtonId() == mSexManRadio.getId()) {
+                            sexString = "man";
+                        } else if (mSexRadioGroup.getCheckedRadioButtonId() == mSexWomanRadio.getId()) {
+                            sexString = "woman";
+                        }
+                        currentUser.setSex(sexString);
+                        Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
+                        user.setValue(currentUser);
+                        Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    currentUser.setSex(sexString);
-                    Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
-                    user.setValue(currentUser);
-                    Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.d("•••", "error");
-            }
-        });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Log.d("•••", "error");
+                }
+            });
+        }
+    }
+
+    public void addUserPhoto (View view) {
+        Intent intent = new Intent(InitialUserInformationsActivity.this, CameraActivity.class);
+        startActivity(intent);
     }
 
 }

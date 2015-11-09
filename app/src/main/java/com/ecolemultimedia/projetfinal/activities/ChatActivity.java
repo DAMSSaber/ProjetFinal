@@ -90,11 +90,12 @@ public class ChatActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // do some stuff once
-                Log.d("•••", "" + snapshot.getValue());
+                Log.d("•••", "snapshot : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                    Log.d("•••", "json : " + jsonObject);
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
 
@@ -111,7 +112,7 @@ public class ChatActivity extends Activity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.d("•••", "azazaz");
+                Log.d("•••", "error");
             }
         });
 
@@ -144,21 +145,27 @@ public class ChatActivity extends Activity {
         mFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue());
+                //Log.d("•••", "snapshot : " + snapshot.getValue());
             //    Log.d("•••", "size : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 listMessage.clear();
+
+                Log.d("•••", "1");
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Message post = postSnapshot.getValue(Message.class);
+                    Log.d("•••", "2");
                     try {
                         jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
+
+                        Log.d("•••", "3");
+                        Log.d("•••", "json : " + jsonObject);
                         Message currentMessage = new Message();
                         currentMessage.initMessage(jsonObject);
                         listMessage.add(currentMessage);
                         mChatListAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Log.d("•••", "error : " + e.getMessage());
                     }
                 }
             }
@@ -212,7 +219,8 @@ public class ChatActivity extends Activity {
         String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
 
-        Log.v("***","image string :"+imageFile);
+
+        Log.d("•••","image string :"+imageFile);
 
 
         Message chat = new Message();

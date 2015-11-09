@@ -68,7 +68,7 @@ public class ListUserChatActivity extends Activity {
                         User user = new User();
                         JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         user.initUser(jsonObject);
-                        if (String.valueOf(user.getUid()) != String.valueOf(mFirebaseRef.getAuth().getUid())) {
+                        if (!String.valueOf(user.getUid()).equals(String.valueOf(mFirebaseRef.getAuth().getUid()))) {
                             listUser.add(user);
                         }
                     }

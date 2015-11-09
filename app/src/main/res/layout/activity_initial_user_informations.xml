@@ -125,18 +125,29 @@
                     android:spinnersShown="true"
                     android:datePickerMode="spinner"/>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/photo_image_view"
+                    android:layout_below="@+id/birthdate_picker"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/add_photo"
+                    android:adjustViewBounds="true"
+                    android:onClick="addUserPhoto" />
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save_button_string"
-                    android:layout_below="@+id/birthdate_picker"
+                    android:layout_below="@+id/photo_image_view"
                     android:background="@color/color_yellow"
                     android:padding="10dp"
                     android:textColor="@color/color_grey_dark"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
-                    android:onClick="saveUserInformations" />
+                    android:onClick="saveUserInformations"
+                    android:id="@+id/button" />
             </RelativeLayout>
 
         </RelativeLayout>
