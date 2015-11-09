@@ -31,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 
@@ -90,12 +92,12 @@ public class ChatActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // do some stuff once
-                Log.d("•••", "snapshot : " + snapshot.getValue());
+                //Log.d("•••", "snapshot : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
-                    Log.d("•••", "json : " + jsonObject);
+                    //Log.d("•••", "json : " + jsonObject);
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
 
@@ -158,9 +160,21 @@ public class ChatActivity extends Activity {
                         jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
 
                         Log.d("•••", "3");
-                        Log.d("•••", "json : " + jsonObject);
+                        //Log.d("•••", "json : " + jsonObject);
                         Message currentMessage = new Message();
                         currentMessage.initMessage(jsonObject);
+                        String decodedMessage = currentMessage.getMessage();
+                        try {
+                            decodedMessage = URLDecoder.decode(decodedMessage, "UTF-8");
+                            Log.d("•••", "decoded msg 1 : " + decodedMessage);
+                            decodedMessage = URLDecoder.decode(decodedMessage, "UTF-8");
+                            Log.d("•••", "decoded msg 2 : " + decodedMessage);
+                            
+                            currentMessage.setMessage(decodedMessage);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            Log.d("•••", "error decoding utf8 : " + e.getMessage());
+                        }
                         listMessage.add(currentMessage);
                         mChatListAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {

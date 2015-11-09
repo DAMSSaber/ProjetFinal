@@ -32,4 +32,5 @@
     <string name="shown_username_label">PSEUDONYME</string>
     <string name="man_string">homme</string>
     <string name="woman_string">femme</string>
+    <string name="title_activity_user_selfie">UserSelfieActivity</string>
 </resources>
