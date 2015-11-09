@@ -39,6 +39,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
     private RadioButton mSexWomanRadio;
     private RadioGroup mSexRadioGroup;
     private DatePicker mBirthdateDatePicker;
+    private EditText mSelfieUrlET;
 
 
     SharedPreferences pref = null;
@@ -59,6 +60,8 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         mSexWomanRadio = (RadioButton)findViewById(R.id.woman_radio_button);
         mSexRadioGroup = (RadioGroup)findViewById(R.id.sex_radio_group);
         mBirthdateDatePicker = (DatePicker)findViewById(R.id.birthdate_picker);
+        mSelfieUrlET = (EditText)findViewById(R.id.selfie_url_input);
+
 
         //long yourDateMillis = System.currentTimeMillis() - (18 * 365 * 24 * 60 * 60 * 1000);
         //mBirthdateDatePicker.setMaxDate(yourDateMillis);
@@ -73,6 +76,11 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         if(mUsernameET.getText().equals(null)) {
             //TODO: utiliser string
             Toast noUserame = Toast.makeText(getApplicationContext(), "Veuillez remplir votre nom d'utilisateur", Toast.LENGTH_LONG);
+            noUserame.show();
+        } else if(mSelfieUrlET.getText().equals(null)) {
+            //TODO: utiliser string
+            Toast noSelfie = Toast.makeText(getApplicationContext(), "Veuillez remplir l'url photo de profil", Toast.LENGTH_LONG);
+            noSelfie.show();
         } else {
             mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -91,6 +99,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
                             sexString = "woman";
                         }
                         currentUser.setSex(sexString);
+                        currentUser.setSelfieUrl(String.valueOf(mSelfieUrlET.getText()));
                         Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
                         user.setValue(currentUser);
                         Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);
