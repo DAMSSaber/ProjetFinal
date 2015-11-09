@@ -33,4 +33,5 @@
     <string name="man_string">homme</string>
     <string name="woman_string">femme</string>
     <string name="title_activity_user_selfie">UserSelfieActivity</string>
+    <string name="selfie_url_hint">url photo de profil (dév)</string>
 </resources>
