@@ -10,8 +10,8 @@ import org.json.JSONObject;
  */
 public class CustomLocation {
 
-    private double latitude = 0;
-    private double longitude = 0;
+    public double latitude = 0;
+    public double longitude = 0;
 
 
     public double getLatitude() {

@@ -53,7 +53,8 @@
             android:text="@string/man_string"
             android:id="@+id/man_checkbox"
             android:layout_below="@+id/textView2"
-            android:textColor="@color/color_grey_dark" />
+            android:textColor="@color/color_grey_dark"
+            android:checked="true" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -63,7 +64,8 @@
             android:layout_below="@+id/man_checkbox"
             android:layout_alignLeft="@+id/man_checkbox"
             android:layout_alignStart="@+id/man_checkbox"
-            android:textColor="@color/color_grey_dark" />
+            android:textColor="@color/color_grey_dark"
+            android:checked="true" />
     </RelativeLayout>
 
     <RelativeLayout

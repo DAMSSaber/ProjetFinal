@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -115,6 +116,34 @@ public class User {
             this.links = new HashMap<String, String>();
             this.links.put(key, value);
         }
+    }
+
+    public int userAge() {
+        String[] separated = this.birthdate.split("-");
+        int year = Integer.parseInt(separated[2]);
+        int month = Integer.parseInt(separated[1]);
+        int day = Integer.parseInt(separated[0]);
+        Date userBirthdate = getDate(year, month, day);
+        Date today = new Date();
+        long diff = today.getTime() - userBirthdate.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        long years = days / 365;
+        return (int) years;
+    }
+
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public void initUser(JSONObject jsonObject) {

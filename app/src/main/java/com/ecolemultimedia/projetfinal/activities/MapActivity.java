@@ -3,6 +3,7 @@ package com.ecolemultimedia.projetfinal.activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -45,7 +47,11 @@ import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -61,6 +67,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Boolean parametersLayoutIsOpen;
     RelativeLayout mParametersLayout;
     RelativeLayout mParametersButton;
+    LinearLayout seekbarlayout;
+    RangeSeekBar<Integer> rangeSeekBar;
+    CheckBox manCB;
+    CheckBox womanCB;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -77,14 +87,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         parametersLayoutIsOpen = false;
         mParametersLayout = (RelativeLayout)findViewById(R.id.parameters_layout);
         mParametersButton = (RelativeLayout)findViewById(R.id.parameters_button);
+        manCB = (CheckBox)findViewById(R.id.man_checkbox);
+        manCB.setChecked(true);
+        womanCB = (CheckBox)findViewById(R.id.woman_checkbox);
+        womanCB.setChecked(true);
 
         //set 2 thumbs seekbar
-        RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
+        rangeSeekBar = new RangeSeekBar<Integer>(this);
         rangeSeekBar.setRangeValues(18, 100);
         rangeSeekBar.setSelectedMinValue(18);
         rangeSeekBar.setSelectedMaxValue(100);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_custom);
-        layout.addView(rangeSeekBar);
+        seekbarlayout = (LinearLayout) findViewById(R.id.seekbar_custom);
+        seekbarlayout.addView(rangeSeekBar);
+
 
 
         buildGoogleApiClient();
@@ -198,18 +213,43 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Log.d("•••", "azazaz");
             }
         });
-        //TODO: use user param for distance
-        updateMapWithMarkers(location, 2.0);
     }
 
     public void updateMapWithMarkers(Location location, Double distance) {
+        gMap.clear();
         GeoQuery geoQuery = mFirebaseGeoRef.queryAtLocation(new GeoLocation(location.getLatitude(), location.getLongitude()), distance);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 System.out.println(String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 if (key != mFirebaseRef.getAuth().getUid()) {
-                    gMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude)).title(key));
+
+                    mFirebaseRef.child("users/" + key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                                User currentUser = new User();
+                                currentUser.initUser(jsonObject);
+
+                                if (getUserAge(currentUser.getBirthdate()) <= rangeSeekBar.getSelectedMaxValue() && getUserAge(currentUser.getBirthdate()) >= rangeSeekBar.getSelectedMinValue()) {
+                                    if ((manCB.isChecked() && String.valueOf(currentUser.getSex()).equals("man")) || (womanCB.isChecked() && String.valueOf(currentUser.getSex()).equals("woman"))) {
+                                        if(currentUser.getLocation() != null) {
+                                            gMap.addMarker(new MarkerOptions().position(new LatLng(currentUser.getLocation().latitude, currentUser.getLocation().longitude)).title(currentUser.getUid()));
+                                        }
+                                    }
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+                            Log.d("•••", "azazaz");
+                        }
+                    });
                 }
             }
 
@@ -244,15 +284,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void showParametersLayout(View view) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mParametersLayout.getLayoutParams();
         if(parametersLayoutIsOpen) {
-            mParametersLayout.getLayoutParams().height = 0;
+            params.height = 0;
+            mParametersLayout.setLayoutParams(params);
             parametersLayoutIsOpen = false;
-            Log.d("•••", "" + mParametersLayout.getLayoutParams().height);
         } else {
-            mParametersLayout.getLayoutParams().height = 150;
+            params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+            mParametersLayout.setLayoutParams(params);
             parametersLayoutIsOpen = true;
-            Log.d("•••", "" + mParametersLayout.getLayoutParams().height);
         }
+        Log.d("•••", "" + manCB.isChecked());
+        Log.d("•••", "" + womanCB.isChecked());
+        updateMapWithMarkers(mLastLocation, 2.0);
+
     }
 
     @Override
@@ -265,6 +310,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             updateCameraWithLocation(mLastLocation);
             updateUserLastLocationWithLocation(mLastLocation);
+            updateMapWithMarkers(mLastLocation, 2.0);
         }
     }
 
@@ -286,4 +332,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onLocationChanged(Location location) {
         updateUserLastLocationWithLocation(location);
     }
+
+    public int getUserAge(String birthdate) {
+        String[] separated = birthdate.split("-");
+        int year = Integer.parseInt(separated[2]);
+        int month = Integer.parseInt(separated[1]);
+        int day = Integer.parseInt(separated[0]);
+        Date userBirthdate = getDate(year, month, day);
+        Date today = new Date();
+        long diff = today.getTime() - userBirthdate.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        long years = days / 365;
+        return (int) years;
+    }
+
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
 }
