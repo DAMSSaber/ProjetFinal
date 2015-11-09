@@ -2,11 +2,60 @@
 <items version="2" >
 
     <item
-        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jar="/Users/saber/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
         jumboMode="false"
         revision="23.0.0"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/classes-a0d5466f5875ee9d14d3c16ac46ee1a85525af9c.jar" />
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-7b5cc58ec1a382175c034c73ff5068331c8f6576.jar" />
+    </item>
+    <item
+        jar="/Users/saber/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.1/44780c2cf98f6a3cf4e77f1234d644758b329201/bolts-android-1.2.1.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="44780c2cf98f6a3cf4e77f1234d644758b329201">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.1-150a70733035398e7c576ad901fd4e366f5560ee.jar" />
+    </item>
+    <item
+        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/classes-2b95ef788c3d74684d95658f567d3b46984aa9d6.jar" />
+    </item>
+    <item
+        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-cb69d7e76b4e5b0fe5e25532068b0bbc687b9427.jar" />
+    </item>
+    <item
+        jar="/Users/saber/.gradle/caches/modules-2/files-2.1/com.parse/parse-android/1.10.3/36366e460af2c0f224bb8f70b64e3302f638b138/parse-android-1.10.3.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="36366e460af2c0f224bb8f70b64e3302f638b138">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/parse-android-1.10.3-30f099cfaf1c69ef1622ad025da9e60ea16f6f66.jar" />
+    </item>
+    <item
+        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/classes-6b84b6f8c5fb404c3a281afc2b445c19d24e6ab5.jar" />
+    </item>
+    <item
+        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/classes-597528cd2a876dd44f965394b1fa4a63b30423ac.jar" />
+    </item>
+    <item
+        jar="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
+        <dex dex="/Users/saber/Desktop/Saber DAMS/Perso/Projet final/ProjetFinal/app/build/intermediates/pre-dexed/debug/classes-0c74f1d867c8100403211a3444857f48fef44a7c.jar" />
     </item>
 
 </items>

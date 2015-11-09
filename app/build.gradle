@@ -51,4 +51,8 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.4.0+'
     compile 'com.firebase:geofire:1.1.0+'
     compile 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
+    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
 }

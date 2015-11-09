@@ -90,12 +90,11 @@ public class ChatActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // do some stuff once
-                Log.d("•••", "snapshot : " + snapshot.getValue());
+                Log.d("•••", "" + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
-                    Log.d("•••", "json : " + jsonObject);
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
 
@@ -112,7 +111,7 @@ public class ChatActivity extends Activity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.d("•••", "error");
+                Log.d("•••", "azazaz");
             }
         });
 
@@ -145,7 +144,7 @@ public class ChatActivity extends Activity {
         mFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                //Log.d("•••", "snapshot : " + snapshot.getValue());
+                System.out.println(snapshot.getValue());
             //    Log.d("•••", "size : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
