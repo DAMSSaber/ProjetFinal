@@ -22,7 +22,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 
 public class ListUserChatActivity extends Activity {
@@ -55,25 +58,56 @@ public class ListUserChatActivity extends Activity {
         adapter = new UserListAdapter(this, listUser);
         ui_list_user.setAdapter(adapter);
 
-        mFirebaseRef.addValueEventListener(new ValueEventListener() {
+        mFirebaseRef.child(mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
                 try {
-
-
                     listUser.clear();
-                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                     //   User post = postSnapshot.getValue(User.class);
+                    User currentUser = new User();
+                    JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                    currentUser.initUser(jsonObject);
+                    Map<String, String> map = currentUser.getLinks();
+                    Set keys = map.keySet();
+                    Iterator it = keys.iterator();
+                    while (it.hasNext()) {
+                        Object key = it.next();
+                        String value = map.get(key);
+                        Log.d("•••", "id user : " + value);
+                        mFirebaseRef.child(value).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                try {
+                                    User user = new User();
+                                    JSONObject jsonObject = null;
+                                    jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
+                                    user.initUser(jsonObject);
+                                    listUser.add(user);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("•••", e.getMessage());
+                                }
+
+                                Log.d("•••", "size : " + listUser.size());
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+                                System.out.println("The read failed: " + firebaseError.getMessage());
+                            }
+
+                        });
+                    }
+                    /*for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        //   User post = postSnapshot.getValue(User.class);
                         User user = new User();
                         JSONObject jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
                         user.initUser(jsonObject);
                         if (!String.valueOf(user.getUid()).equals(String.valueOf(mFirebaseRef.getAuth().getUid()))) {
                             listUser.add(user);
                         }
-                    }
-                    Log.d("•••", "size : " + listUser.size());
-                    adapter.notifyDataSetChanged();
+                    }*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +126,7 @@ public class ListUserChatActivity extends Activity {
                 mClickedUserId = position;
                 Log.d("•••", "id user clicked : " + listUser.get(position).getUid());
 
-                mFirebaseRef.child(mFirebaseRef.getAuth().getUid() + "/links").orderByValue().equalTo(listUser.get(position).getUid()).addValueEventListener(new ValueEventListener() {
+                mFirebaseRef.child(mFirebaseRef.getAuth().getUid() + "/links").orderByValue().equalTo(listUser.get(position).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         if (snapshot.getValue() != null) {
@@ -107,7 +141,8 @@ public class ListUserChatActivity extends Activity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        } else {
+                        }
+                        /*else {
 
                             Firebase chatRoom = mFirebaseRef.getParent().child("chat").push();
                             ArrayList<String> users = new ArrayList<String>();
@@ -170,7 +205,7 @@ public class ListUserChatActivity extends Activity {
                                     Log.d("•••", "azazaz");
                                 }
                             });
-                        }
+                        }*/
 
                     }
 

@@ -44,15 +44,15 @@ public class Message {
     }
 
     public String getMessage() {
-        String decodedString = null;
+        /*String decodedString = null;
         try {
             decodedString = URLDecoder.decode(message, "UTF-8");
             return decodedString;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
-        }
-        //return this.message;
+        }*/
+        return this.message;
     }
 
     public void setMessage(String message) {

@@ -41,6 +41,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
@@ -58,7 +59,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
     RelativeLayout ui_rl_menu = null;
 
@@ -96,7 +98,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         womanCB = (CheckBox)findViewById(R.id.woman_checkbox);
         womanCB.setChecked(true);
         //set maximum visible users distance
-        mDistance= 5.0;
+        mDistance= 20.0;
 
         //set 2 thumbs seekbar
         rangeSeekBar = new RangeSeekBar<Integer>(this);
@@ -112,12 +114,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mGoogleApiClient.connect();
         setUpMapIfNeeded();
         gMap.getUiSettings().setMyLocationButtonEnabled(false);
+        gMap.setOnMarkerClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
 
 
-
-        try {
+        //test encoding
+        /*try {
             String string = "test test";
             String encodedString = URLEncoder.encode(string, "UTF-8");
             String decodedString = URLDecoder.decode(encodedString, "UTF-8");
@@ -128,7 +131,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             Log.d("•••", "decoded string : " + decodedString);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -219,7 +222,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 */
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
-                    Log.d("•••", "" + jsonObject);
+                    //Log.d("•••", "" + jsonObject);
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
                     currentUser.setLocation(loc);
@@ -258,7 +261,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                                 if (getUserAge(currentUser.getBirthdate()) <= rangeSeekBar.getSelectedMaxValue() && getUserAge(currentUser.getBirthdate()) >= rangeSeekBar.getSelectedMinValue()) {
                                     if ((manCB.isChecked() && String.valueOf(currentUser.getSex()).equals("man")) || (womanCB.isChecked() && String.valueOf(currentUser.getSex()).equals("woman"))) {
                                         if(currentUser.getLocation() != null) {
-                                            gMap.addMarker(new MarkerOptions().position(new LatLng(currentUser.getLocation().latitude, currentUser.getLocation().longitude)).title(currentUser.getUsername()));
+                                            gMap.addMarker(new MarkerOptions().position(new LatLng(currentUser.getLocation().latitude, currentUser.getLocation().longitude)).title(currentUser.getUid()));
                                         }
                                     }
                                 }
@@ -383,4 +386,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         return cal.getTime();
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Intent intent = new Intent(MapActivity.this, UserSelfieActivity.class);
+        intent.putExtra("uid", marker.getTitle());
+        startActivity(intent);
+        return false;
+    }
 }

@@ -50,8 +50,8 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         mSexRadioGroup = (RadioGroup)findViewById(R.id.sex_radio_group);
         mBirthdateDatePicker = (DatePicker)findViewById(R.id.birthdate_picker);
 
-        long yourDateMillis = System.currentTimeMillis() - (18 * 365 * 24 * 60 * 60 * 1000);
-        mBirthdateDatePicker.setMaxDate(yourDateMillis);
+        //long yourDateMillis = System.currentTimeMillis() - (18 * 365 * 24 * 60 * 60 * 1000);
+        //mBirthdateDatePicker.setMaxDate(yourDateMillis);
 
         mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com");
 

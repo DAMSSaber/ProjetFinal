@@ -22,7 +22,7 @@ public class User {
     String username=null;
     CustomLocation location=null;
     Boolean isVisible=null;
-    ArrayList<String> selfies=null;
+    String selfieUrl=null;
     Integer usedSelfieIndex=null;
     String sex=null;
     String birthdate=null;
@@ -69,12 +69,12 @@ public class User {
         this.isVisible = isVisible;
     }
 
-    public ArrayList<String> getSelfies() {
-        return selfies;
+    public String getSelfieUrl() {
+        return selfieUrl;
     }
 
-    public void setSelfies(ArrayList<String> selfies) {
-        this.selfies = selfies;
+    public void setSelfieUrl(String selfie) {
+        this.selfieUrl= selfie;
     }
 
     public Integer getUsedSelfieIndex() {
@@ -190,6 +190,10 @@ public class User {
                 CustomLocation location =new CustomLocation();
                 location.initLocation(jsonObject.getJSONObject("location"));
                 setLocation(location);
+            }
+
+            if(jsonObject.has("selfieUrl")){
+                setSelfieUrl(jsonObject.getString("selfieUrl"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
