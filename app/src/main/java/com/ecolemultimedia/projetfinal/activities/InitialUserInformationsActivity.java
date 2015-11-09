@@ -1,6 +1,7 @@
 package com.ecolemultimedia.projetfinal.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.support.design.widget.FloatingActionButton;
@@ -39,10 +40,19 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
     private RadioGroup mSexRadioGroup;
     private DatePicker mBirthdateDatePicker;
 
+
+    SharedPreferences pref = null;
+    private SharedPreferences editor = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_user_informations);
+
+
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+
+
 
         mUsernameET = (EditText)findViewById(R.id.username_input);
         mSexManRadio = (RadioButton)findViewById(R.id.man_radio_button);
@@ -99,6 +109,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
     }
 
     public void addUserPhoto (View view) {
+
         Intent intent = new Intent(InitialUserInformationsActivity.this, CameraActivity.class);
         startActivity(intent);
     }

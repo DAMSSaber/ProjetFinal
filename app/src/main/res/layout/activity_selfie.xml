@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyneo_activity_saveProduct"
     android:layout_width="fill_parent"
+
+
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
@@ -26,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_yellow"
+            android:gravity="center_horizontal"
             android:inputType="textAutoCorrect"
             android:minLines="10"
             android:overScrollMode="always"
@@ -33,4 +36,22 @@
             android:scrollbarStyle="insideInset"
             android:textColor="@android:color/white"></EditText>
     </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/ui_save"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/add" />
+
+    <ImageView
+        android:id="@+id/ui_cancel"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/block" />
 </RelativeLayout>

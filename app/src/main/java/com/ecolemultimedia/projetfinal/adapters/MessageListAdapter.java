@@ -18,11 +18,18 @@ public class MessageListAdapter extends BaseAdapter {
     private Context context = null;
     private Activity activity = null;
 
-    public MessageListAdapter(Context context, ArrayList<Message> listMessage, Activity activity) {
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    private String currentUser=null;
+
+    public MessageListAdapter(Context context, ArrayList<Message> listMessage, Activity activity,String currentUser) {
 
         this.listMessage = listMessage;
         this.context = context;
         this.activity = activity;
+        this.currentUser=currentUser;
     }
 
 
@@ -54,7 +61,7 @@ public class MessageListAdapter extends BaseAdapter {
         } else
             cellMenu = (CellDemoChild) convertView;
 
-        cellMenu.reuse(item);
+        cellMenu.reuse(item,currentUser);
         return cellMenu;
     }
 

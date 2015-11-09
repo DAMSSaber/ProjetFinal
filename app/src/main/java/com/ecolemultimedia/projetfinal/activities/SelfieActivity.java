@@ -31,11 +31,15 @@ public class SelfieActivity extends Activity {
     //use for view
     private ImageView view;
     private Button scan;
+    private ImageView ui_cancel = null;
+    private ImageView ui_save = null;
+
 
     private String pathPicture;
-    private RelativeLayout ui_layout_edit=null;
+    private RelativeLayout ui_layout_edit = null;
 
     long offset = -1; //text position will be corrected when touching.
+    int numeroScan;
 
 
     @Override
@@ -50,6 +54,10 @@ public class SelfieActivity extends Activity {
         //	pathForAppFiles = picture;
         //		Log.d("Still image source filename:", pathForAppFiles);
 
+        ui_cancel = (ImageView) findViewById(R.id.ui_cancel);
+        ui_save = (ImageView) findViewById(R.id.ui_save);
+
+
         Bitmap bma = BitmapFactory.decodeFile(pathPicture);
         ImageView picCamera = (ImageView) this.findViewById(R.id.pic);
 
@@ -59,7 +67,7 @@ public class SelfieActivity extends Activity {
         Bitmap bm = bma.createBitmap(bma, 0, 0, bma.getWidth(), bma.getHeight(), matrix, true);
         picCamera.setImageBitmap(bm);
 
-        ui_layout_edit=(RelativeLayout)findViewById(R.id.ui_layout_edit);
+        ui_layout_edit = (RelativeLayout) findViewById(R.id.ui_layout_edit);
         final EditText dwEdit = (EditText) findViewById(R.id.edit_text);
         dwEdit.getBackground().setAlpha(128);
 
@@ -78,6 +86,26 @@ public class SelfieActivity extends Activity {
             }
 
         });
+
+
+        ui_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numeroScan++;
+                saveBitmap(takeScreenshot(), numeroScan);
+
+            }
+        });
+
+
+        ui_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
     }
 
     @Override
@@ -91,20 +119,20 @@ public class SelfieActivity extends Activity {
         super.onPause();
     }
 
-  /*public Bitmap takeScreenshot() {
-        findViewById(R.id.bt_Mirroir).setVisibility(View.INVISIBLE);
-        findViewById(R.id.bt_scan).setVisibility(View.INVISIBLE);
-        View rootView = findViewById(R.id.keyneo_activity_paysage).getRootView();
+    public Bitmap takeScreenshot() {
+        findViewById(R.id.ui_save).setVisibility(View.INVISIBLE);
+        findViewById(R.id.ui_cancel).setVisibility(View.INVISIBLE);
+        View rootView = findViewById(R.id.keyneo_activity_saveProduct).getRootView();
         rootView.setDrawingCacheEnabled(true);
-
         return rootView.getDrawingCache();
 
-    }*/
+    }
 
     /**
      * Save the Bitmap when you scan screen
      */
-    public void saveBitmap(Bitmap bitmap, int num) {
+    public String saveBitmap(Bitmap bitmap, int num) {
+
         File imagePath = new File(Environment.getExternalStorageDirectory() + "/screenshot" + num + ".png");
         FileOutputStream fos;
         try {
@@ -112,11 +140,14 @@ public class SelfieActivity extends Activity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
+
         } catch (FileNotFoundException e) {
             Log.e("GREC", e.getMessage(), e);
         } catch (IOException e) {
             Log.e("GREC", e.getMessage(), e);
         }
+
+        return imagePath.getPath();
     }
 
 

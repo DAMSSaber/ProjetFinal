@@ -31,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 
@@ -40,6 +42,11 @@ public class ChatActivity extends Activity {
     private EditText ui_edit_text = null;
     private Button ui_btn_send = null;
     private ListView ui_lis_message = null;
+
+    public void setmUsername(String mUsername) {
+        this.mUsername = mUsername;
+    }
+
     private String mUsername = null;
     private String mRoomId = null;
     private Firebase mFirebaseRef;
@@ -75,8 +82,8 @@ public class ChatActivity extends Activity {
         ui_btn_selfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(ChatActivity.this, CameraActivity.class);
-              //  startActivity(intent);
+                // Intent intent = new Intent(ChatActivity.this, CameraActivity.class);
+                //  startActivity(intent);
                 sendMessageImage();
             }
         });
@@ -120,7 +127,8 @@ public class ChatActivity extends Activity {
         ui_edit_text = (EditText) findViewById(R.id.ui_edit_text);
         ui_btn_send = (Button) findViewById(R.id.ui_btn_send);
         ui_lis_message = (ListView) findViewById(R.id.ui_lis_message);
-
+        mChatListAdapter = new MessageListAdapter(this, listMessage, ChatActivity.this,mUsername);
+        ui_lis_message.setAdapter(mChatListAdapter);
 
         ui_edit_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -146,7 +154,7 @@ public class ChatActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 //Log.d("•••", "snapshot : " + snapshot.getValue());
-            //    Log.d("•••", "size : " + snapshot.getValue());
+                //    Log.d("•••", "size : " + snapshot.getValue());
 
                 JSONObject jsonObject = null;
                 listMessage.clear();
@@ -167,13 +175,14 @@ public class ChatActivity extends Activity {
                             Log.d("•••", "decoded msg 1 : " + decodedMessage);
                             decodedMessage = URLDecoder.decode(decodedMessage, "UTF-8");
                             Log.d("•••", "decoded msg 2 : " + decodedMessage);
-                            
+
                             currentMessage.setMessage(decodedMessage);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                             Log.d("•••", "error decoding utf8 : " + e.getMessage());
                         }
                         listMessage.add(currentMessage);
+                        mChatListAdapter.setCurrentUser(mUsername);
                         mChatListAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -190,8 +199,7 @@ public class ChatActivity extends Activity {
         });
 
 
-        mChatListAdapter = new MessageListAdapter(this, listMessage, ChatActivity.this);
-        ui_lis_message.setAdapter(mChatListAdapter);
+
 
 
         mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -232,7 +240,7 @@ public class ChatActivity extends Activity {
 
 
 
-        Log.d("•••","image string :"+imageFile);
+        Log.d("•••", "image string :" + imageFile);
 
 
         Message chat = new Message();
