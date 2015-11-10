@@ -2,6 +2,7 @@ package com.ecolemultimedia.projetfinal.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -34,6 +35,8 @@ public class SelfieActivity extends Activity {
     private ImageView ui_cancel = null;
     private ImageView ui_save = null;
 
+    SharedPreferences pref = null;
+    private SharedPreferences editor = null;
 
     private String pathPicture;
     private RelativeLayout ui_layout_edit = null;
@@ -93,8 +96,12 @@ public class SelfieActivity extends Activity {
             public void onClick(View v) {
                 numeroScan++;
                 saveBitmap(takeScreenshot(), numeroScan);
+                pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+                SharedPreferences.Editor editorss = pref.edit();
 
-                Log.d("Debeug","------"+saveBitmap(takeScreenshot(), numeroScan));
+                editorss.putString("firstrun", saveBitmap(takeScreenshot(), numeroScan)).commit();
+
+                Log.d("Debeug", "------" + saveBitmap(takeScreenshot(), numeroScan));
 
             }
         });
