@@ -159,22 +159,22 @@ public class ChatActivity extends Activity {
                 JSONObject jsonObject = null;
                 listMessage.clear();
 
-                Log.d("•••", "1");
+                //Log.d("•••", "1");
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Log.d("•••", "2");
+                    //Log.d("•••", "2");
                     try {
                         jsonObject = new JSONObject(String.valueOf(postSnapshot.getValue()));
 
-                        Log.d("•••", "3");
+                        //Log.d("•••", "3");
                         //Log.d("•••", "json : " + jsonObject);
                         Message currentMessage = new Message();
                         currentMessage.initMessage(jsonObject);
                         String decodedMessage = currentMessage.getMessage();
                         try {
                             decodedMessage = URLDecoder.decode(decodedMessage, "UTF-8");
-                            Log.d("•••", "decoded msg 1 : " + decodedMessage);
+                            //Log.d("•••", "decoded msg 1 : " + decodedMessage);
                             decodedMessage = URLDecoder.decode(decodedMessage, "UTF-8");
-                            Log.d("•••", "decoded msg 2 : " + decodedMessage);
+                            //Log.d("•••", "decoded msg 2 : " + decodedMessage);
 
                             currentMessage.setMessage(decodedMessage);
                         } catch (UnsupportedEncodingException e) {

@@ -31,6 +31,9 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -129,7 +132,13 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
                             sexString = "woman";
                         }
                         currentUser.setSex(sexString);
-                        currentUser.setSelfieUrl(String.valueOf(mSelfieUrlET.getText()));
+                        String encodedString = null;
+                        try {
+                            encodedString = URLEncoder.encode(String.valueOf(mSelfieUrlET.getText()), "UTF-8");
+                            currentUser.setSelfieUrl(encodedString);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                         Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
                         user.setValue(currentUser);
                         Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);

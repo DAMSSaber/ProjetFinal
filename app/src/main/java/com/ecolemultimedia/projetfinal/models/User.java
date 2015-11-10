@@ -5,6 +5,9 @@ import android.location.Location;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,10 +74,26 @@ public class User {
 
     public String getSelfieUrl() {
         return selfieUrl;
+        /*String decodedString = null;
+        try {
+            decodedString = URLDecoder.decode(selfieUrl, "UTF-8");
+            return decodedString;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }*/
     }
 
     public void setSelfieUrl(String selfie) {
         this.selfieUrl= selfie;
+/*
+        String encodedString = null;
+        try {
+            encodedString = URLEncoder.encode(selfie, "UTF-8");
+            this.selfieUrl = encodedString;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }*/
     }
 
     public Integer getUsedSelfieIndex() {

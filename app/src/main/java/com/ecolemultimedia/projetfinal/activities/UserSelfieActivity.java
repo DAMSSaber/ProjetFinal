@@ -24,6 +24,8 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -42,6 +44,7 @@ public class UserSelfieActivity extends AppCompatActivity {
 
         mFirebaseRef = new Firebase("https://projetfinal.firebaseio.com");
         mUID = getIntent().getExtras().getString("uid");
+        mUserSelfie = (ImageView)findViewById(R.id.user_photo);
 
         mFirebaseRef.child("users/" + mUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -50,14 +53,21 @@ public class UserSelfieActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(String.valueOf(snapshot.getValue()));
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
-                    mUserSelfie = (ImageView)findViewById(R.id.user_profil_selfie);
                     mUserSelfieUrl = currentUser.getSelfieUrl();
                     if(mUserSelfieUrl != null) {
+                        String decodedUrl = String.valueOf(mUserSelfieUrl);
+                        try {
+                            decodedUrl = URLDecoder.decode(decodedUrl, "UTF-8");
+                            //decodedUrl = URLDecoder.decode(decodedUrl, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            Log.d("•••", "error decoding utf8 : " + e.getMessage());
+                        }
                         AppController.getInstance().getRequestQueue().getCache()
                                 .remove(mUserSelfieUrl);
                         ImageLoader imageLoader = AppController.getInstance()
                                 .getImageLoader();
-                        imageLoader.get(mUserSelfieUrl, new ImageLoader.ImageListener() {
+                        imageLoader.get(decodedUrl, new ImageLoader.ImageListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
 

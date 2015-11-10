@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/color_grey_light_low_opacity"
-            android:paddingLeft="20dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <ImageView
                 android:id="@+id/user_profil_selfie"
@@ -46,7 +47,7 @@
                 android:background="@color/color_grey_dark"
                 android:padding="1dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/profile" />
+                android:src="@drawable/silhouette" />
 
             <TextView
                 android:id="@+id/username_label"

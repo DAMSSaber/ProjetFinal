@@ -24,6 +24,8 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -63,26 +65,6 @@ public class ProfilActivity extends AppCompatActivity {
 
         mUserProfilSelfie = (ImageView) findViewById(R.id.user_profil_selfie);
 
-    }
-
-    public void disconnect(View view) {
-        mFirebaseRef.unauth();
-        getApplicationContext().getSharedPreferences("currentUser", MODE_PRIVATE).edit().clear().commit();
-        Intent intent = new Intent(this, LogInActivity.class);
-        startActivity(intent);
-    }
-
-    public void editProfil(View view) {
-        Intent intent = new Intent(this, EditProfilActivity.class);
-        startActivity(intent);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
         mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -96,7 +78,15 @@ public class ProfilActivity extends AppCompatActivity {
                     currentUser.initUser(jsonObject);
 
                     if(currentUser.getSelfieUrl() != null) {
-                        mUserSelfieUrl = String.valueOf(currentUser.getSelfieUrl());
+                        String decodedUrl = String.valueOf(currentUser.getSelfieUrl());
+                        try {
+                            decodedUrl = URLDecoder.decode(decodedUrl, "UTF-8");
+                            //decodedUrl = URLDecoder.decode(decodedUrl, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            Log.d("•••", "error decoding utf8 : " + e.getMessage());
+                        }
+                        mUserSelfieUrl = decodedUrl;
                         AppController.getInstance().getRequestQueue().getCache()
                                 .remove(mUserSelfieUrl);
                         ImageLoader imageLoader = AppController.getInstance()
@@ -124,7 +114,6 @@ public class ProfilActivity extends AppCompatActivity {
                         ui_email.setText(currentUser.getEmail());
                     }
                     if (currentUser.getBirthdate() != null) {
-                        Log.d("•••", String.valueOf(getUserAge(String.valueOf(currentUser.getBirthdate()))));
                         ui_age.setText(String.valueOf(getUserAge(String.valueOf(currentUser.getBirthdate()))) + " ans");
                     }
                     if (currentUser.getSex() != null) {
@@ -148,6 +137,27 @@ public class ProfilActivity extends AppCompatActivity {
                 Log.d("•••", "azazaz");
             }
         });
+    }
+
+    public void disconnect(View view) {
+        mFirebaseRef.unauth();
+        getApplicationContext().getSharedPreferences("currentUser", MODE_PRIVATE).edit().clear().commit();
+        Intent intent = new Intent(this, LogInActivity.class);
+        startActivity(intent);
+    }
+
+    public void editProfil(View view) {
+        Intent intent = new Intent(this, EditProfilActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
 
 
         ui_btn_valider.setOnClickListener(new View.OnClickListener() {
