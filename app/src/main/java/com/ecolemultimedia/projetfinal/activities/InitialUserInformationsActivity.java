@@ -39,8 +39,6 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
     private RadioButton mSexWomanRadio;
     private RadioGroup mSexRadioGroup;
     private DatePicker mBirthdateDatePicker;
-
-
     SharedPreferences pref = null;
     private SharedPreferences editor = null;
 
@@ -50,7 +48,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_initial_user_informations);
 
 
-        pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+
 
 
 
@@ -95,6 +93,9 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
                         user.setValue(currentUser);
                         Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);
                         startActivity(intent);
+
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

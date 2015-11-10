@@ -94,6 +94,8 @@ public class SelfieActivity extends Activity {
                 numeroScan++;
                 saveBitmap(takeScreenshot(), numeroScan);
 
+                Log.d("Debeug","------"+saveBitmap(takeScreenshot(), numeroScan));
+
             }
         });
 

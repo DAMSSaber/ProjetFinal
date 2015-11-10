@@ -1,30 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/backgroundprofil">
 
 
-    <Button
-        android:id="@+id/ui_btn_selfie"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/ui_rl_content_selfie"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
-        android:background="@color/color_yellow"
-        android:text="Selfie"
-        android:textColor="@android:color/white" />
+        android:background="@color/color_bg_menu">
+
+        <Button
+            android:id="@+id/ui_btn_selfie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:background="@color/color_yellow"
+            android:text="Selfie"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/ui_lis_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ui_sperateur"
-        android:background="@android:color/white"></ListView>
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_above="@+id/ui_sperateurr"
+        android:layout_below="@id/ui_rl_content_selfie"></ListView>
 
 
     <TextView
-        android:id="@id/ui_sperateur"
+        android:id="@id/ui_sperateurr"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/ui_rl_write_message"
@@ -58,7 +67,7 @@
             android:layout_marginLeft="20dp"
             android:layout_weight="0.8"
             android:background="@color/color_yellow"
-            android:text="SEND"
+            android:text="Send"
             android:textStyle="bold" />
 
     </LinearLayout>

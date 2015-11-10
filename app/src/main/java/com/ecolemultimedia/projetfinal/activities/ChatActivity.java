@@ -82,9 +82,9 @@ public class ChatActivity extends Activity {
         ui_btn_selfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent intent = new Intent(ChatActivity.this, CameraActivity.class);
-                //  startActivity(intent);
-                sendMessageImage();
+                  Intent intent = new Intent(ChatActivity.this, CameraActivity.class);
+                  startActivity(intent);
+               // sendMessageImage();
             }
         });
 

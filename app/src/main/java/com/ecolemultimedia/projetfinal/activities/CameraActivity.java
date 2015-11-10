@@ -59,7 +59,6 @@ public class CameraActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         takePhoto();
-
                     }
                 }
         );
@@ -69,7 +68,7 @@ public class CameraActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPreview.switchCamera();
+                     //   mPreview.switchCamera();
                     }
                 }
         );
