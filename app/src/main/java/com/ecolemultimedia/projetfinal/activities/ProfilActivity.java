@@ -10,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.ecolemultimedia.projetfinal.R;
+import com.ecolemultimedia.projetfinal.components.AppController;
 import com.ecolemultimedia.projetfinal.models.User;
 import com.ecolemultimedia.projetfinal.views.ViewMenu;
 import com.firebase.client.DataSnapshot;
@@ -21,9 +24,13 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class ProfilActivity extends AppCompatActivity {
 
     private ImageView mUserProfilSelfie;
+    String mUserSelfieUrl;
     RelativeLayout ui_rl_menu = null;
     private Firebase mFirebaseRef;
 
@@ -88,6 +95,26 @@ public class ProfilActivity extends AppCompatActivity {
                     User currentUser = new User();
                     currentUser.initUser(jsonObject);
 
+                    if(currentUser.getSelfieUrl() != null) {
+                        mUserSelfieUrl = String.valueOf(currentUser.getSelfieUrl());
+                        AppController.getInstance().getRequestQueue().getCache()
+                                .remove(mUserSelfieUrl);
+                        ImageLoader imageLoader = AppController.getInstance()
+                                .getImageLoader();
+                        imageLoader.get(mUserSelfieUrl, new ImageLoader.ImageListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+
+                            @Override
+                            public void onResponse(ImageLoader.ImageContainer response, boolean arg1) {
+                                if (response.getBitmap() != null) {
+                                    mUserProfilSelfie.setImageBitmap(response.getBitmap());
+                                }
+                            }
+                        });
+                    }
 
                     if (currentUser.getUsername() != null) {
                         ui_username.setText(currentUser.getUsername());
@@ -97,10 +124,15 @@ public class ProfilActivity extends AppCompatActivity {
                         ui_email.setText(currentUser.getEmail());
                     }
                     if (currentUser.getBirthdate() != null) {
-                        ui_age.setText(currentUser.getBirthdate());
+                        Log.d("•••", String.valueOf(getUserAge(String.valueOf(currentUser.getBirthdate()))));
+                        ui_age.setText(String.valueOf(getUserAge(String.valueOf(currentUser.getBirthdate()))) + " ans");
                     }
                     if (currentUser.getSex() != null) {
-                        ui_sex.setText(currentUser.getSex());
+                        if(String.valueOf(currentUser.getSex()).equals("man")) {
+                            ui_sex.setText("Homme");
+                        } else {
+                            ui_sex.setText("Femme");
+                        }
                     }
 
 
@@ -126,5 +158,35 @@ public class ProfilActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+    public int getUserAge(String birthdate) {
+        String[] separated = birthdate.split("-");
+        int year = Integer.parseInt(separated[2]);
+        int month = Integer.parseInt(separated[1]);
+        int day = Integer.parseInt(separated[0]);
+        Date userBirthdate = getDate(year, month, day);
+        Date today = new Date();
+        long diff = today.getTime() - userBirthdate.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        long years = days / 365;
+        return (int) years;
+    }
+
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

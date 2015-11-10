@@ -5,9 +5,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ecolemultimedia.projetfinal.R;
+import com.ecolemultimedia.projetfinal.models.CustomLocation;
 import com.ecolemultimedia.projetfinal.models.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -25,7 +31,8 @@ import com.firebase.client.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 public class InitialUserInformationsActivity extends AppCompatActivity {
 
@@ -35,6 +42,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
     private RadioButton mSexWomanRadio;
     private RadioGroup mSexRadioGroup;
     private DatePicker mBirthdateDatePicker;
+    private EditText mSelfieUrlET;
 
 
     private ImageView add_photo = null;
@@ -59,6 +67,16 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         SharedPreferences.Editor editorss = pref.edit();
         editorss.putString("firstrun", "").commit();
+
+
+
+        mUsernameET = (EditText)findViewById(R.id.username_input);
+        mSexManRadio = (RadioButton)findViewById(R.id.man_radio_button);
+        mSexWomanRadio = (RadioButton)findViewById(R.id.woman_radio_button);
+        mSexRadioGroup = (RadioGroup)findViewById(R.id.sex_radio_group);
+        mBirthdateDatePicker = (DatePicker)findViewById(R.id.birthdate_picker);
+        mSelfieUrlET = (EditText)findViewById(R.id.selfie_url_input);
+
 
         //long yourDateMillis = System.currentTimeMillis() - (18 * 365 * 24 * 60 * 60 * 1000);
         //mBirthdateDatePicker.setMaxDate(yourDateMillis);
@@ -85,9 +103,14 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
 
     public void saveUserInformations(View view) {
         //TODO: add test on selfie
-        if (mUsernameET.getText().equals(null)) {
+        if(mUsernameET.getText().equals(null)) {
             //TODO: utiliser string
             Toast noUserame = Toast.makeText(getApplicationContext(), "Veuillez remplir votre nom d'utilisateur", Toast.LENGTH_LONG);
+            noUserame.show();
+        } else if(mSelfieUrlET.getText().equals(null)) {
+            //TODO: utiliser string
+            Toast noSelfie = Toast.makeText(getApplicationContext(), "Veuillez remplir l'url photo de profil", Toast.LENGTH_LONG);
+            noSelfie.show();
         } else {
             mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -106,6 +129,7 @@ public class InitialUserInformationsActivity extends AppCompatActivity {
                             sexString = "woman";
                         }
                         currentUser.setSex(sexString);
+                        currentUser.setSelfieUrl(String.valueOf(mSelfieUrlET.getText()));
                         Firebase user = mFirebaseRef.child("users/" + mFirebaseRef.getAuth().getUid());
                         user.setValue(currentUser);
                         Intent intent = new Intent(InitialUserInformationsActivity.this, MapActivity.class);

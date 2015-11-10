@@ -135,11 +135,31 @@
                     android:adjustViewBounds="true"
                     android:onClick="addUserPhoto" />
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/selfie_url_input"
+                    android:layout_centerHorizontal="true"
+                    android:hint="@string/selfie_url_hint"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:textColor="@color/color_grey_dark"
+                    android:background="@color/color_white"
+                    android:textColorHint="@color/color_grey_dark"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/photo_image_view"
+                    android:layout_marginTop="20dp" />
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save_button_string"
-                    android:layout_below="@+id/photo_image_view"
+                    android:layout_below="@+id/selfie_url_input"
                     android:background="@color/color_yellow"
                     android:padding="10dp"
                     android:textColor="@color/color_grey_dark"
